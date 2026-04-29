@@ -24,6 +24,7 @@ from app.research import research_segment, ResearchInputs, extract_stories
 from app.script import compose_transcript, ScriptInputs
 from app.synthesize import synthesize_episode
 from app.tts import get_provider
+from app.publish import publish_episode, PublishInputs
 
 
 def cmd_prepare(args: argparse.Namespace) -> int:
@@ -169,6 +170,64 @@ def cmd_script(args: argparse.Namespace) -> int:
     return 0
 
 
+def _make_summarizer():
+    """Returns a callable (transcript_md, briefs_blob) -> summary body string. Calls Anthropic."""
+    from anthropic import Anthropic
+    import os
+    client = Anthropic()
+    model = os.environ.get("PODCAST_SUMMARY_MODEL", "claude-haiku-4-5-20251001")
+    def _call(transcript_md: str, briefs_blob: str) -> str:
+        prompt = (
+            "Summarize this podcast episode in <=250 words. Use this exact structure:\n\n"
+            "## Headlines covered\n- [segment_id] One-line headline. (source-domain)\n\n"
+            "## Named entities\n<comma list>\n\n"
+            "## Open threads\n- [segment_id] One-liner.\n\n"
+            "## Tone notes\n- One-line guidance for tomorrow.\n\n"
+            f"TRANSCRIPT:\n{transcript_md}\n\nRESEARCH BRIEFS:\n{briefs_blob}\n"
+        )
+        resp = client.messages.create(
+            model=model, max_tokens=600,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return "".join(getattr(b, "text", "") for b in resp.content)
+    return _call
+
+
+def _make_compressor():
+    """Returns a callable text -> compressed text. Calls Anthropic."""
+    from anthropic import Anthropic
+    import os
+    client = Anthropic()
+    model = os.environ.get("PODCAST_COMPRESS_MODEL", "claude-haiku-4-5-20251001")
+    def _call(text: str) -> str:
+        prompt = (
+            "Compress this history into a tight 'Background context' paragraph (<=120 words). "
+            "Preserve named entities, open threads, and rough chronology. Drop repeated daily detail.\n\n"
+            f"{text}\n"
+        )
+        resp = client.messages.create(
+            model=model, max_tokens=400,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return "".join(getattr(b, "text", "") for b in resp.content)
+    return _call
+
+
+def cmd_publish(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    date: str = args.date
+    cfg = load_config(root / "config.yaml")
+    publish_episode(PublishInputs(
+        root=root,
+        date_iso=date,
+        config=cfg,
+        summarizer=_make_summarizer(),
+        compressor=_make_compressor(),
+    ))
+    print(f"Published episode {date}", flush=True)
+    return 0
+
+
 def _todo(name: str):
     def _impl(_args: argparse.Namespace) -> int:
         raise NotImplementedError(f"CLI subcommand {name!r} not yet wired")
@@ -200,7 +259,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     p_publish = sub.add_parser("publish")
     p_publish.add_argument("--date", required=True)
-    p_publish.set_defaults(func=_todo("publish"))
+    p_publish.set_defaults(func=cmd_publish)
 
     p_generate = sub.add_parser("generate")
     p_generate.add_argument("--date", required=False, default=None)
