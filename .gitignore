@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Pipeline outputs that may be regenerated
+episodes/.cache/
+
+# IDE
+.vscode/
+.idea/
