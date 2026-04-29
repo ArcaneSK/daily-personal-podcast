@@ -1,5 +1,6 @@
 from __future__ import annotations
 import argparse
+import asyncio
 from pathlib import Path
 from typing import Sequence
 
@@ -15,7 +16,11 @@ from app.paths import (
     manifest_path,
     synthesis_manifest_path,
     tts_cache_dir,
+    research_path,
+    recent_digest_path,
+    segment_history_path,
 )
+from app.research import research_segment, ResearchInputs
 from app.synthesize import synthesize_episode
 from app.tts import get_provider
 
@@ -64,6 +69,61 @@ def cmd_synthesize(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_research(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    date: str = args.date
+    cfg = load_config(root / "config.yaml")
+    manifest = read_manifest(manifest_path(root, date))
+
+    targets = manifest.segments
+    if args.segment:
+        targets = [s for s in manifest.segments if s.id == args.segment]
+        if not targets:
+            print(f"Segment {args.segment!r} not in manifest.", flush=True)
+            return 2
+
+    recent = ""
+    rd = recent_digest_path(root)
+    if rd.exists():
+        recent = rd.read_text(encoding="utf-8")
+
+    async def _run_all():
+        sem = asyncio.Semaphore(cfg.research.max_segments_concurrent)
+
+        async def _one(entry):
+            async with sem:
+                seg_path = root / entry.path
+                history_path = segment_history_path(root, entry.id)
+                history = history_path.read_text(encoding="utf-8") if history_path.exists() else ""
+                inputs = ResearchInputs(
+                    segment_id=entry.id,
+                    segment_prose=seg_path.read_text(encoding="utf-8"),
+                    segment_history=history,
+                    recent_digest=recent,
+                    date_iso=date,
+                    out_path=research_path(root, date, entry.id),
+                    timeout_seconds=cfg.research.per_segment_timeout_seconds,
+                )
+                return await asyncio.to_thread(research_segment, inputs)
+
+        return await asyncio.gather(*(_one(s) for s in targets))
+
+    results = asyncio.run(_run_all())
+    for entry, result in zip(targets, results):
+        manifest.set_status(entry.id, result.status)
+
+    write_manifest(manifest_path(root, date), manifest)
+    counts = {"full": 0, "blurb": 0, "empty": 0}
+    for r in results:
+        counts[r.status] = counts.get(r.status, 0) + 1
+    print(
+        f"Researched {len(results)} segments — "
+        f"{counts['full']} full, {counts['blurb']} blurb, {counts['empty']} empty.",
+        flush=True,
+    )
+    return 0
+
+
 def _todo(name: str):
     def _impl(_args: argparse.Namespace) -> int:
         raise NotImplementedError(f"CLI subcommand {name!r} not yet wired")
@@ -83,7 +143,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     p_research = sub.add_parser("research")
     p_research.add_argument("--date", required=True)
     p_research.add_argument("--segment", default=None)
-    p_research.set_defaults(func=_todo("research"))
+    p_research.set_defaults(func=cmd_research)
 
     p_script = sub.add_parser("script")
     p_script.add_argument("--date", required=True)
