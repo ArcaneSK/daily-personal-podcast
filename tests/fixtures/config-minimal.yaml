@@ -1,0 +1,39 @@
+podcast:
+  title: "Test Podcast"
+  description: "For tests"
+  author: "Tester"
+  language: en-US
+  base_url: "https://example.test/"
+
+show:
+  target_total_minutes: 25
+  narrator:
+    name: "Alex"
+    persona: "Calm, concise."
+  host_a:
+    name: "Sam"
+    persona: "Curious."
+  host_b:
+    name: "Jordan"
+    persona: "Skeptical."
+
+research:
+  parallel: true
+  max_segments_concurrent: 4
+  per_segment_timeout_seconds: 180
+
+tts:
+  provider: fake
+  cache: true
+  voices:
+    narrator: "voice_n"
+    host_a: "voice_a"
+    host_b: "voice_b"
+  options:
+    fake: {}
+
+publish:
+  output_dir: docs
+  recent_window_days: 7
+  segment_history_token_cap: 1500
+  recent_digest_word_cap: 500
