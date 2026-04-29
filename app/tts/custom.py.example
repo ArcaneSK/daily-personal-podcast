@@ -1,0 +1,25 @@
+"""Drop-in TTS provider example. Copy to app/tts/custom.py (or any module),
+set tts.provider in config.yaml to the dotted module path (e.g. "app.tts.custom.MyProvider"),
+and the registry will discover it."""
+from __future__ import annotations
+from typing import Any
+from app.tts.base import VoiceClip
+
+
+class MyProvider:
+    name: str = "mine"
+
+    def __init__(self, voice_for: dict[str, str] | None = None, **opts: Any):
+        # Pull credentials/options from opts; opts is the config.yaml `tts.options.<provider>` map.
+        self._voice_for = voice_for or {}
+        # self._client = MyTTSClient(api_key=opts.get("api_key", os.environ["MY_TTS_KEY"]))
+
+    def synthesize(self, text: str, voice_id: str) -> VoiceClip:
+        # Call your engine, return raw audio bytes + mime type.
+        # If you know the sample rate, set it; otherwise return None and the synthesizer probes.
+        raise NotImplementedError
+
+    def voice_for_role(self, role: str) -> str:
+        if role not in self._voice_for:
+            raise KeyError(f"No voice configured for role {role!r}")
+        return self._voice_for[role]
