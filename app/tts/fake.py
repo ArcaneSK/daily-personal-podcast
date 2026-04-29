@@ -3,7 +3,8 @@ import io
 import math
 import struct
 import wave
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any
 
 from app.tts.base import VoiceClip
 
@@ -15,6 +16,7 @@ _ROLE_MAP = {"narrator": "fake_narrator", "host_a": "fake_host_a", "host_b": "fa
 class FakeProvider:
     sample_rate: int = 24000
     name: str = "fake"
+    voice_for: dict[str, Any] = field(default_factory=dict)
 
     def synthesize(self, text: str, voice_id: str) -> VoiceClip:
         # Duration scales with text length so concatenation remains audible-distinguishable in tests.
