@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ episode.title }} — {{ podcast.title }}{% endblock %}
+{% block css %}../../static/style.css{% endblock %}
+{% block main %}
+<article>
+  <h2>{{ episode.title }}</h2>
+  <p class="meta">{{ episode.date_iso }} · {{ episode.duration_label }}</p>
+  <audio controls preload="metadata" src="{{ episode.mp3_relpath }}"></audio>
+  <section class="show-notes">{{ episode.show_notes_html | safe }}</section>
+</article>
+{% endblock %}

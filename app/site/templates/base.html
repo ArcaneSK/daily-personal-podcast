@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ podcast.language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}{{ podcast.title }}{% endblock %}</title>
+  <link rel="stylesheet" href="{% block css %}/static/style.css{% endblock %}">
+  <link rel="alternate" type="application/rss+xml" title="{{ podcast.title }}" href="{{ podcast.base_url }}podcast.xml">
+</head>
+<body>
+  <header>
+    <h1><a href="{{ podcast.base_url }}">{{ podcast.title }}</a></h1>
+    <p>{{ podcast.description }}</p>
+  </header>
+  <main>{% block main %}{% endblock %}</main>
+  <footer><small>{{ podcast.author }}</small></footer>
+</body>
+</html>

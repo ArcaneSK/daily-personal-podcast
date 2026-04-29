@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ podcast.title }}{% endblock %}
+{% block main %}
+<ul class="episodes">
+  {% for ep in episodes %}
+  <li>
+    <h2><a href="episodes/{{ ep.date_iso }}/">{{ ep.title }}</a></h2>
+    <p class="meta">{{ ep.date_iso }} · {{ ep.duration_label }}</p>
+    <audio controls preload="none" src="{{ ep.mp3_relpath }}"></audio>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
