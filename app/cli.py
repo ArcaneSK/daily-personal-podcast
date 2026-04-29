@@ -20,7 +20,8 @@ from app.paths import (
     recent_digest_path,
     segment_history_path,
 )
-from app.research import research_segment, ResearchInputs
+from app.research import research_segment, ResearchInputs, extract_stories
+from app.script import compose_transcript, ScriptInputs
 from app.synthesize import synthesize_episode
 from app.tts import get_provider
 
@@ -124,6 +125,50 @@ def cmd_research(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_script(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    date: str = args.date
+    cfg = load_config(root / "config.yaml")
+    manifest = read_manifest(manifest_path(root, date))
+
+    recent = ""
+    rd = recent_digest_path(root)
+    if rd.exists():
+        recent = rd.read_text(encoding="utf-8")
+
+    segments_input = []
+    for s in manifest.segments:
+        prose = (root / s.path).read_text(encoding="utf-8")
+        history_path_ = segment_history_path(root, s.id)
+        history = history_path_.read_text(encoding="utf-8") if history_path_.exists() else ""
+        rpath = research_path(root, date, s.id)
+        research_text = rpath.read_text(encoding="utf-8") if rpath.exists() else ""
+        # Re-extract stories from the on-disk brief (single source of truth)
+        stories = extract_stories(s.id, research_text) if research_text else []
+        segments_input.append({
+            "id": s.id,
+            "status": s.status,
+            "prose": prose,
+            "history": history,
+            "research": research_text,
+            "stories": stories,
+        })
+
+    inputs = ScriptInputs(
+        date_iso=date,
+        target_total_minutes=cfg.show.target_total_minutes,
+        narrator_name=cfg.show.narrator.name, narrator_persona=cfg.show.narrator.persona,
+        host_a_name=cfg.show.host_a.name, host_a_persona=cfg.show.host_a.persona,
+        host_b_name=cfg.show.host_b.name, host_b_persona=cfg.show.host_b.persona,
+        recent_digest=recent,
+        segments=segments_input,
+        out_path=transcript_path(root, date),
+    )
+    out = compose_transcript(inputs)
+    print(f"Wrote {out}", flush=True)
+    return 0
+
+
 def _todo(name: str):
     def _impl(_args: argparse.Namespace) -> int:
         raise NotImplementedError(f"CLI subcommand {name!r} not yet wired")
@@ -147,7 +192,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     p_script = sub.add_parser("script")
     p_script.add_argument("--date", required=True)
-    p_script.set_defaults(func=_todo("script"))
+    p_script.set_defaults(func=cmd_script)
 
     p_synth = sub.add_parser("synthesize")
     p_synth.add_argument("--date", required=True)
