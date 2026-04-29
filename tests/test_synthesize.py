@@ -76,6 +76,7 @@ def test_cache_hit_skips_provider_call(tmp_project: Path, monkeypatch):
     # Now wrap the provider so a second call would raise.
     class Boom:
         sample_rate = 24000
+        name = "fake"
         def synthesize(self, *a, **k): raise AssertionError("Provider should not be called on cache hit")
         def voice_for_role(self, role): return "vN"
 

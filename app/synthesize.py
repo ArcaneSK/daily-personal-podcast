@@ -100,7 +100,7 @@ def synthesize_episode(
 
         voice_id = voice_for_role[c.role]
         key = _cache_key(
-            provider_name="",
+            provider_name=getattr(provider, "name", provider.__class__.__name__),
             voice_id=voice_id,
             text=c.text,
             options=provider_options_for_cache or {},
