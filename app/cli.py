@@ -1,6 +1,7 @@
 from __future__ import annotations
 import argparse
 import asyncio
+from datetime import date as _date_cls
 from pathlib import Path
 from typing import Sequence
 
@@ -228,6 +229,22 @@ def cmd_publish(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_generate(args: argparse.Namespace) -> int:
+    root: Path = args.root
+    date_iso = args.date or _date_cls.today().isoformat()
+
+    if not args.force and episode_mp3_path(root, date_iso).exists():
+        print(f"Episode {date_iso} already exists. Pass --force to overwrite.", flush=True)
+        return 3
+
+    sub_args = argparse.Namespace(root=root, date=date_iso, segment=None)
+    for step in (cmd_prepare, cmd_research, cmd_script, cmd_synthesize, cmd_publish):
+        rc = step(sub_args)
+        if rc != 0:
+            return rc
+    return 0
+
+
 def _todo(name: str):
     def _impl(_args: argparse.Namespace) -> int:
         raise NotImplementedError(f"CLI subcommand {name!r} not yet wired")
@@ -264,7 +281,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     p_generate = sub.add_parser("generate")
     p_generate.add_argument("--date", required=False, default=None)
     p_generate.add_argument("--force", action="store_true")
-    p_generate.set_defaults(func=_todo("generate"))
+    p_generate.set_defaults(func=cmd_generate)
 
     args = parser.parse_args(argv)
     return args.func(args)
