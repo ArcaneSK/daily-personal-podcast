@@ -40,6 +40,31 @@ _STORY_RE = re.compile(r"###\s+\d+\.\s+(.+)\n((?:.|\n)*?)(?=\n###\s+\d+\.|\n##\s
 _SOURCE_RE = re.compile(r"\*\*Source:\*\*\s*(\S+)")
 
 
+_OPEN_THREADS_RE = re.compile(
+    r"##\s+Open threads to revisit\s*\n((?:[ \t]*-[ \t]+.+\n?)*)",
+    re.IGNORECASE,
+)
+
+
+def _extract_open_threads(brief_md: str) -> list[str]:
+    """Parse '## Open threads to revisit' section and return each bullet as a string.
+
+    Leading '- ' is stripped; the rest of the bullet body is kept as-is.
+    Returns an empty list if the section is absent or has no bullet items.
+    """
+    m = _OPEN_THREADS_RE.search(brief_md)
+    if not m:
+        return []
+    threads: list[str] = []
+    for line in m.group(1).splitlines():
+        stripped = line.strip()
+        if stripped.startswith("- "):
+            threads.append(stripped[2:].strip())
+        elif stripped.startswith("-"):
+            threads.append(stripped[1:].strip())
+    return [t for t in threads if t]
+
+
 def _extract_stories(brief_md: str) -> list[tuple[str, str]]:
     """Return [(headline, source_url)] from a research brief's 'Top stories' section."""
     out: list[tuple[str, str]] = []
@@ -210,13 +235,16 @@ def publish_episode(inp: PublishInputs) -> None:
     # 4. Per-segment history — every segment gets an entry, regardless of status.
     #    Covered: included for full/blurb (with the headlines), omitted for empty.
     for s in manifest.segments:
+        rpath = research_path(root, date, s.id)
+        brief = rpath.read_text(encoding="utf-8") if rpath.exists() else ""
         stories = per_segment_stories.get(s.id, [])
         covered = [h for h, _ in stories] if s.status != "empty" else []
+        open_threads = _extract_open_threads(brief) if s.status != "empty" else []
         entry = SegmentHistoryEntry(
             date_iso=date,
             status=s.status,
             covered=covered,
-            open_threads=[],   # full extraction deferred to a future enhancement
+            open_threads=open_threads,
         )
         append_segment_history(
             segment_history_path(root, s.id),

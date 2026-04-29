@@ -27,11 +27,14 @@ def _seed_episode_mixed(tmp_project: Path, date: str):
         "### 1. Hello\n- **What happened:** intro thing\n- **Source:** https://example.com/1\n"
         "### 2. World\n- **What happened:** another\n- **Source:** https://example.com/1b\n"
     )
-    # 02-news: full (2 stories)
+    # 02-news: full (2 stories) with open threads
     (edir / "research" / "02-news.md").write_text(
         "## Top stories (prioritized)\n"
         "### 1. News\n- **What happened:** news thing\n- **Source:** https://example.com/2\n"
         "### 2. More news\n- **What happened:** more\n- **Source:** https://example.com/2b\n"
+        "\n## Open threads to revisit\n"
+        "- AI regulation bill still in committee, no vote scheduled\n"
+        "- Open-source LLM benchmark controversy ongoing\n"
     )
     # 03-markets: blurb (1 story)
     (edir / "research" / "03-markets.md").write_text(
@@ -128,3 +131,20 @@ def test_publish_writes_summary_recent_rss_and_site(tmp_project, frozen_date):
     assert (tmp_project / "docs" / "index.html").exists()
     assert (tmp_project / "docs" / "episodes" / frozen_date / "index.html").exists()
     assert (tmp_project / "docs" / "episodes" / frozen_date / "episode.mp3").exists()
+
+
+def test_publish_extracts_open_threads_into_segment_history(tmp_project, frozen_date):
+    """Open threads from the research brief should appear in the segment history entry."""
+    _seed(tmp_project)
+    _seed_episode_mixed(tmp_project, frozen_date)
+    cfg = load_config(tmp_project / "config.yaml")
+    publish_episode(PublishInputs(
+        root=tmp_project, date_iso=frozen_date, config=cfg,
+        summarizer=lambda t, b: "## Headlines covered\n- (test)\n",
+        compressor=lambda t: "(compressed)",
+    ))
+
+    news_history = (tmp_project / "segments" / "_history" / "02-news.md").read_text()
+    assert "Open threads:" in news_history
+    assert "AI regulation bill still in committee, no vote scheduled" in news_history
+    assert "Open-source LLM benchmark controversy ongoing" in news_history

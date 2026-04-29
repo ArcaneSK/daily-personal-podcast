@@ -69,6 +69,10 @@ def _call_agent_sdk(prompt: str, *, timeout_seconds: int) -> str:
     from claude_agent_sdk import query, ClaudeAgentOptions  # type: ignore
 
     async def _run() -> str:
+        # "WebSearch" and "WebFetch" are the correct PascalCase tool identifiers
+        # used by the Claude Code CLI's --allowedTools flag (confirmed against
+        # claude-agent-sdk v0.1.71; ServerToolName snake_case identifiers are
+        # for stream-parsing only and are not passed here).
         options = ClaudeAgentOptions(allowed_tools=["WebSearch", "WebFetch"])
         chunks: list[str] = []
         async for message in query(prompt=prompt, options=options):
