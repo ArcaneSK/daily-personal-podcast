@@ -22,7 +22,6 @@ def _inputs(tmp_project: Path, segments) -> ScriptInputs:
     return ScriptInputs(
         date_iso="2026-04-29",
         target_total_minutes=20,
-        narrator_name="Alex", narrator_persona="Calm.",
         host_a_name="Sam", host_a_persona="Curious.",
         host_b_name="Jordan", host_b_persona="Skeptical.",
         recent_digest="Yesterday: launches.",
@@ -167,10 +166,10 @@ def test_compose_transcript_writes_filtered_transcript(tmp_project):
         _seg("99-outro", "full"),
     ]
     transcript_text = (
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n"
-        "## SEGMENT_BREAK 02-news\n[NARRATOR] news\n"
-        "## SEGMENT_BREAK __wystk\n[NARRATOR] quick notes\n"
-        "## SEGMENT_BREAK 99-outro\n[NARRATOR] bye\n"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n"
+        "## SEGMENT_BREAK 02-news\n[HOST_A] news\n"
+        "## SEGMENT_BREAK __wystk\n[HOST_A] quick notes\n"
+        "## SEGMENT_BREAK 99-outro\n[HOST_A] bye\n"
     )
     with patch("app.script._call_claude", return_value=transcript_text):
         result = compose_transcript(_inputs(tmp_project, segments))
@@ -187,7 +186,7 @@ def test_compose_transcript_validates_speaker_tags(tmp_project):
 
 def test_compose_transcript_requires_all_filtered_segment_breaks(tmp_project):
     segments = [_seg("01-intro", "full"), _seg("02-news", "full"), _seg("99-outro", "full")]
-    missing = "## SEGMENT_BREAK 01-intro\n[NARRATOR] only one\n"
+    missing = "## SEGMENT_BREAK 01-intro\n[HOST_A] only one\n"
     with patch("app.script._call_claude", return_value=missing):
         with pytest.raises(ValueError, match="missing SEGMENT_BREAK"):
             compose_transcript(_inputs(tmp_project, segments))
@@ -197,9 +196,9 @@ def test_compose_transcript_rejects_unexpected_segment_break(tmp_project):
     """Empty-classified segments must NOT appear in the transcript."""
     segments = [_seg("01-intro", "full"), _seg("02-news", "empty"), _seg("99-outro", "full")]
     transcript_with_empty = (
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n"
-        "## SEGMENT_BREAK 02-news\n[NARRATOR] should not be here\n"
-        "## SEGMENT_BREAK 99-outro\n[NARRATOR] bye\n"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n"
+        "## SEGMENT_BREAK 02-news\n[HOST_A] should not be here\n"
+        "## SEGMENT_BREAK 99-outro\n[HOST_A] bye\n"
     )
     with patch("app.script._call_claude", return_value=transcript_with_empty):
         with pytest.raises(ValueError, match="unexpected SEGMENT_BREAK"):

@@ -12,10 +12,10 @@ def test_load_config_returns_typed_object():
     assert isinstance(cfg, Config)
     assert cfg.podcast.title == "Test Podcast"
     assert cfg.show.target_total_minutes == 25
-    assert cfg.show.narrator.name == "Alex"
+    assert cfg.show.host_a.name == "Sam"
     assert cfg.research.max_segments_concurrent == 4
     assert cfg.tts.provider == "fake"
-    assert cfg.tts.voices["narrator"] == "voice_n"
+    assert cfg.tts.voices["host_a"] == "voice_a"
     assert cfg.publish.recent_window_days == 7
 
 
@@ -28,8 +28,8 @@ def test_load_config_missing_required_section_raises(tmp_path: Path):
 
 def test_voice_for_role_lookup():
     cfg = load_config(FIXTURE)
-    assert cfg.tts.voice_for_role("narrator") == "voice_n"
     assert cfg.tts.voice_for_role("host_a") == "voice_a"
+    assert cfg.tts.voice_for_role("host_b") == "voice_b"
 
 
 def test_voice_for_role_unknown_raises():

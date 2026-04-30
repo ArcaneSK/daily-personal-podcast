@@ -4,8 +4,8 @@ from typing import Iterable, Literal
 import re
 
 _BREAK_RE = re.compile(r"^##\s+SEGMENT_BREAK\s+(\S+)\s*$")
-_LINE_RE = re.compile(r"^\[(NARRATOR|HOST_A|HOST_B)\]\s*:?\s+(.*)$")
-_ROLE_MAP = {"NARRATOR": "narrator", "HOST_A": "host_a", "HOST_B": "host_b"}
+_LINE_RE = re.compile(r"^\[(HOST_A|HOST_B)\]\s*:?\s+(.*)$")
+_ROLE_MAP = {"HOST_A": "host_a", "HOST_B": "host_b"}
 
 
 @dataclass(frozen=True)
@@ -15,7 +15,7 @@ class SegmentBreak:
 
 @dataclass(frozen=True)
 class Line:
-    role: str         # "narrator" | "host_a" | "host_b"
+    role: str         # "host_a" | "host_b"
     text: str
     segment_id: str   # which segment this line belongs to
 

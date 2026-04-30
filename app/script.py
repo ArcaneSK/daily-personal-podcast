@@ -73,7 +73,7 @@ Word budget per line is ~15-25 words for HOST_A, ~25-50 words for HOST_B, with
 the longer end reserved for substantive single-thought delivery.
 
 Output a transcript with explicit speaker tags. Speakers are exactly: [HOST_A]
-and [HOST_B]. Do NOT use [NARRATOR]. Every spoken line must be tagged.
+and [HOST_B]. Every spoken line must be tagged.
 
 Use ## SEGMENT_BREAK <segment-id> markers between segments (one before each
 segment, in rundown order). Include a SEGMENT_BREAK for every id in the rundown
@@ -109,8 +109,6 @@ Output only the transcript. No prologue, no commentary outside the speaker tags.
 class ScriptInputs:
     date_iso: str
     target_total_minutes: int
-    narrator_name: str
-    narrator_persona: str
     host_a_name: str
     host_a_persona: str
     host_b_name: str

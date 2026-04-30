@@ -21,8 +21,8 @@ def test_script_command_writes_transcript_for_full_rundown(tmp_project, frozen_d
         "### 2. h2\n- **What happened:** other\n- **Source:** https://example.com/b\n"
     )
     transcript_text = (
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n"
-        "## SEGMENT_BREAK 02-news\n[NARRATOR] news\n"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n"
+        "## SEGMENT_BREAK 02-news\n[HOST_A] news\n"
     )
     with patch("app.research._call_agent_sdk", return_value=full_brief), \
          patch("app.script._call_claude", return_value=transcript_text):
@@ -30,7 +30,7 @@ def test_script_command_writes_transcript_for_full_rundown(tmp_project, frozen_d
         rc = cli_main(["--root", str(tmp_project), "script", "--date", frozen_date])
     assert rc == 0
     transcript = (tmp_project / "episodes" / frozen_date / "transcript.md").read_text()
-    assert "[NARRATOR] hi" in transcript
+    assert "[HOST_A] hi" in transcript
 
 
 def test_script_command_includes_wystk_when_blurb_present(tmp_project, frozen_date):
@@ -53,8 +53,8 @@ def test_script_command_includes_wystk_when_blurb_present(tmp_project, frozen_da
         return full_brief if "01-intro" in prompt or "Greet" in prompt else blurb_brief
 
     transcript_text = (
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n"
-        "## SEGMENT_BREAK __wystk\n[NARRATOR] one quick note before we close.\n"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n"
+        "## SEGMENT_BREAK __wystk\n[HOST_A] one quick note before we close.\n"
     )
     with patch("app.research._call_agent_sdk", side_effect=fake_sdk), \
          patch("app.script._call_claude", return_value=transcript_text):

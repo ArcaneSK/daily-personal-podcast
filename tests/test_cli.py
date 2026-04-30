@@ -46,7 +46,7 @@ def test_synthesize_uses_existing_transcript(tmp_project, frozen_date):
     cli_main(["--root", str(tmp_project), "prepare", "--date", frozen_date])
     transcript = tmp_project / "episodes" / frozen_date / "transcript.md"
     transcript.write_text(
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] Hello.\n## SEGMENT_BREAK 02-news\n[NARRATOR] News.\n",
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] Hello.\n## SEGMENT_BREAK 02-news\n[HOST_A] News.\n",
         encoding="utf-8",
     )
     rc = cli_main(["--root", str(tmp_project), "synthesize", "--date", frozen_date])

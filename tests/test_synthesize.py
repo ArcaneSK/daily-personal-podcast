@@ -8,8 +8,8 @@ from app.tts.fake import FakeProvider
 
 TRANSCRIPT = """## SEGMENT_BREAK 01-intro
 
-[NARRATOR] Hello there.
-[NARRATOR] Today's show.
+[HOST_A] Hello there.
+[HOST_A] Today's show.
 
 ## SEGMENT_BREAK 02-ai-news
 
@@ -53,7 +53,7 @@ def test_synthesize_writes_mp3_and_manifest(tmp_project: Path):
 
 def test_cache_hit_skips_provider_call(tmp_project: Path, monkeypatch):
     # Pre-populate cache for a known chunk; verify provider is not called for it.
-    transcript = "## SEGMENT_BREAK 01-intro\n[NARRATOR] one chunk only.\n"
+    transcript = "## SEGMENT_BREAK 01-intro\n[HOST_A] one chunk only.\n"
     tp = tmp_project / "episodes" / "2026-04-29" / "transcript.md"
     tp.parent.mkdir(parents=True, exist_ok=True)
     tp.write_text(transcript, encoding="utf-8")

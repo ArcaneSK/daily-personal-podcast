@@ -27,9 +27,9 @@ def test_full_pipeline_produces_complete_episode(tmp_project, frozen_date):
         "### 2. Story two\n- **What happened:** thing\n- **Source:** https://example.com/b\n"
     )
     fake_transcript = (
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] Good morning.\n"
-        "## SEGMENT_BREAK 02-ai-news\n[NARRATOR] News.\n[HOST_A] First.\n[HOST_B] Counter.\n"
-        "## SEGMENT_BREAK 99-outro\n[NARRATOR] Goodbye.\n"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] Good morning.\n"
+        "## SEGMENT_BREAK 02-ai-news\n[HOST_A] News.\n[HOST_A] First.\n[HOST_B] Counter.\n"
+        "## SEGMENT_BREAK 99-outro\n[HOST_A] Goodbye.\n"
     )
     with patch("app.research._call_agent_sdk", return_value=fake_brief), \
          patch("app.script._call_claude", return_value=fake_transcript), \
@@ -82,10 +82,10 @@ def test_full_pipeline_with_mixed_status(tmp_project, frozen_date):
         return full_brief
 
     fake_transcript = (
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] Good morning.\n"
-        "## SEGMENT_BREAK 02-ai-news\n[NARRATOR] News today.\n"
-        "## SEGMENT_BREAK __wystk\n[NARRATOR] Quick note: per Wsj, the S&P closed flat.\n"
-        "## SEGMENT_BREAK 99-outro\n[NARRATOR] Goodbye.\n"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] Good morning.\n"
+        "## SEGMENT_BREAK 02-ai-news\n[HOST_A] News today.\n"
+        "## SEGMENT_BREAK __wystk\n[HOST_A] Quick note: per Wsj, the S&P closed flat.\n"
+        "## SEGMENT_BREAK 99-outro\n[HOST_A] Goodbye.\n"
     )
     with patch("app.research._call_agent_sdk", side_effect=fake_sdk), \
          patch("app.script._call_claude", return_value=fake_transcript), \

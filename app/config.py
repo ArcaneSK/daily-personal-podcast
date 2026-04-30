@@ -23,7 +23,6 @@ class Persona:
 @dataclass(frozen=True)
 class ShowConfig:
     target_total_minutes: int
-    narrator: Persona
     host_a: Persona
     host_b: Persona
 
@@ -106,7 +105,6 @@ def load_config(path: Path) -> Config:
         podcast=PodcastMeta(**raw["podcast"]),
         show=ShowConfig(
             target_total_minutes=raw["show"]["target_total_minutes"],
-            narrator=_persona(raw["show"]["narrator"]),
             host_a=_persona(raw["show"]["host_a"]),
             host_b=_persona(raw["show"]["host_b"]),
         ),

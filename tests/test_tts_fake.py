@@ -25,7 +25,6 @@ def test_fake_provider_returns_wav_bytes_at_known_rate():
 
 def test_fake_provider_voice_for_role_returns_distinct_ids():
     p = FakeProvider(sample_rate=24000)
-    assert p.voice_for_role("narrator") == "fake_narrator"
     assert p.voice_for_role("host_a") == "fake_host_a"
     assert p.voice_for_role("host_b") == "fake_host_b"
 

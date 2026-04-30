@@ -7,9 +7,6 @@ podcast:
 
 show:
   target_total_minutes: 25
-  narrator:
-    name: "Alex"
-    persona: "Calm, concise."
   host_a:
     name: "Sam"
     persona: "Curious."
@@ -26,7 +23,6 @@ tts:
   provider: fake
   cache: true
   voices:
-    narrator: "voice_n"
     host_a: "voice_a"
     host_b: "voice_b"
   options:

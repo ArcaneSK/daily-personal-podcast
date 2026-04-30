@@ -21,7 +21,7 @@ def _seed(tmp_project, date):
         encoding="utf-8",
     )
     (edir / "transcript.md").write_text(
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n", encoding="utf-8"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n", encoding="utf-8"
     )
     (edir / "episode.mp3").write_bytes(b"\x00" * 50)
     (edir / "synthesis-manifest.json").write_text(json.dumps({"chunks": [], "total_ms": 60000}), encoding="utf-8")

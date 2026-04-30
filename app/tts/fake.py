@@ -9,7 +9,7 @@ from typing import Any
 from app.tts.base import VoiceClip
 
 
-_ROLE_MAP = {"narrator": "fake_narrator", "host_a": "fake_host_a", "host_b": "fake_host_b"}
+_ROLE_MAP = {"host_a": "fake_host_a", "host_b": "fake_host_b"}
 
 
 @dataclass

@@ -46,9 +46,9 @@ def _seed_episode_mixed(tmp_project: Path, date: str):
         "## Top stories (prioritized)\n(no stories today)\n"
     )
     (edir / "transcript.md").write_text(
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n"
-        "## SEGMENT_BREAK 02-news\n[NARRATOR] News from example.\n"
-        "## SEGMENT_BREAK __wystk\n[NARRATOR] One quick note: S&P closed flat per Wsj.\n",
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n"
+        "## SEGMENT_BREAK 02-news\n[HOST_A] News from example.\n"
+        "## SEGMENT_BREAK __wystk\n[HOST_A] One quick note: S&P closed flat per Wsj.\n",
         encoding="utf-8",
     )
     (edir / "episode.mp3").write_bytes(b"ID3" + b"\x00" * 100)

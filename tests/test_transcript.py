@@ -20,7 +20,7 @@ def test_parse_yields_breaks_and_lines():
         "SegmentBreak", "Line",
     ]
     assert items[0] == SegmentBreak(segment_id="01-intro")
-    assert items[1] == Line(role="narrator", text="Good morning. It's Wednesday.", segment_id="01-intro")
+    assert items[1] == Line(role="host_a", text="Good morning. It's Wednesday.", segment_id="01-intro")
     assert items[5] == Line(role="host_a", text="The big one is Opus 4.7.", segment_id="02-ai-news")
 
 
@@ -31,7 +31,7 @@ def test_unknown_speaker_raises():
 
 
 def test_line_outside_segment_break_raises():
-    bad = "[NARRATOR] Hi without a break.\n"
+    bad = "[HOST_A] Hi without a break.\n"
     with pytest.raises(ValueError, match="before any SEGMENT_BREAK"):
         parse_transcript(bad)
 
@@ -39,27 +39,22 @@ def test_line_outside_segment_break_raises():
 def test_chunk_groups_consecutive_same_speaker():
     items = parse_transcript(FIXTURE.read_text(encoding="utf-8"))
     chunks = chunk_for_synthesis(items, max_chars=1000)
-    # 01-intro narrator: 2 lines -> 1 chunk
-    # 02-ai-news narrator: 1 line -> 1 chunk
-    # 02-ai-news host_a: 1 line -> 1 chunk
+    # 01-intro host_a: 2 lines -> 1 chunk
+    # 02-ai-news host_a: 2 lines -> 1 chunk
     # 02-ai-news host_b: 1 line -> 1 chunk
-    # 99-outro narrator: 1 line -> 1 chunk
+    # 99-outro host_a: 1 line -> 1 chunk
     # Plus 3 segment breaks (silence markers)
-    assert [c.kind for c in chunks] == ["break", "speech", "break", "speech", "speech", "speech", "break", "speech"]
+    assert [c.kind for c in chunks] == ["break", "speech", "break", "speech", "speech", "break", "speech"]
     speech = [c for c in chunks if c.kind == "speech"]
-    assert speech[0].role == "narrator"
+    assert speech[0].role == "host_a"
     assert "Good morning" in speech[0].text and "First up" in speech[0].text
-    assert speech[2].role == "host_a"
+    assert speech[2].role == "host_b"
 
 
 def test_chunk_splits_on_max_chars():
-    items = [SegmentBreak(segment_id="01-intro")] + [
-        # 200 lines of 60 chars each, all same speaker -> must split into multiple chunks at 1000 char cap
-        type("L", (), {})()  # placeholder to avoid using real Line in this synthetic test
-    ]
-    # Instead, build 5 lines of 300 chars same-speaker
+    # Build 5 lines of 300 chars same-speaker
     from app.transcript import Line as L, SegmentBreak as B
-    items = [B(segment_id="01-intro")] + [L(role="narrator", text="x" * 300, segment_id="01-intro") for _ in range(5)]
+    items = [B(segment_id="01-intro")] + [L(role="host_a", text="x" * 300, segment_id="01-intro") for _ in range(5)]
     chunks = chunk_for_synthesis(items, max_chars=1000)
     speech = [c for c in chunks if c.kind == "speech"]
     # 5 * 300 = 1500 chars total; cap 1000 means 2 chunks (one ~900-ish, one ~600)

@@ -16,8 +16,8 @@ def test_generate_runs_full_pipeline(tmp_project, frozen_date):
     _seed(tmp_project)
     fake_brief = "## Top stories (prioritized)\n### 1. h\n- **Source:** https://x\n### 2. h2\n- **Source:** https://y\n"
     transcript_text = (
-        "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n"
-        "## SEGMENT_BREAK 02-news\n[NARRATOR] news\n"
+        "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n"
+        "## SEGMENT_BREAK 02-news\n[HOST_A] news\n"
     )
     with patch("app.research._call_agent_sdk", return_value=fake_brief), \
          patch("app.script._call_claude", return_value=transcript_text), \
@@ -44,7 +44,7 @@ def test_generate_force_overrides(tmp_project, frozen_date):
     edir.mkdir(parents=True, exist_ok=True)
     (edir / "episode.mp3").write_bytes(b"\x00")
     fake_brief = "## Top stories (prioritized)\n### 1. h\n- **Source:** https://x\n### 2. h2\n- **Source:** https://y\n"
-    transcript_text = "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n## SEGMENT_BREAK 02-news\n[NARRATOR] news\n"
+    transcript_text = "## SEGMENT_BREAK 01-intro\n[HOST_A] hi\n## SEGMENT_BREAK 02-news\n[HOST_A] news\n"
     with patch("app.research._call_agent_sdk", return_value=fake_brief), \
          patch("app.script._call_claude", return_value=transcript_text), \
          patch("app.cli._make_summarizer", return_value=lambda t, b: "summary body"), \

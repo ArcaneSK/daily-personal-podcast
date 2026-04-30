@@ -179,7 +179,6 @@ def cmd_script(args: argparse.Namespace) -> int:
     inputs = ScriptInputs(
         date_iso=date,
         target_total_minutes=cfg.show.target_total_minutes,
-        narrator_name=cfg.show.narrator.name, narrator_persona=cfg.show.narrator.persona,
         host_a_name=cfg.show.host_a.name, host_a_persona=cfg.show.host_a.persona,
         host_b_name=cfg.show.host_b.name, host_b_persona=cfg.show.host_b.persona,
         recent_digest=recent,

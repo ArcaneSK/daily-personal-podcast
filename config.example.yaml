@@ -14,11 +14,7 @@ show:
   target_total_minutes: 22
   # The show is a two-host conversation. host_a drives (opens, transitions,
   # closes); host_b brings the information. Pick names that match the voices
-  # you'll use. The 'narrator' slot is retained for backward compatibility
-  # and should mirror host_a in case any legacy NARRATOR-tagged lines slip in.
-  narrator:
-    name: "Host A name"
-    persona: "(legacy slot — same as host_a)"
+  # you'll use.
   host_a:
     name: "Host A name"
     persona: "Drives the show — opens, leads transitions, asks the obvious follow-up questions, keeps the pace moving."
@@ -44,7 +40,6 @@ tts:
   # Replace these with real ElevenLabs voice IDs from your account
   # (https://elevenlabs.io/app/voice-library or your /v1/voices API).
   voices:
-    narrator: "REPLACE_WITH_HOST_A_VOICE_ID"
     host_a:   "REPLACE_WITH_HOST_A_VOICE_ID"
     host_b:   "REPLACE_WITH_HOST_B_VOICE_ID"
   options:
