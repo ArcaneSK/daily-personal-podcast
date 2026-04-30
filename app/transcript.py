@@ -4,7 +4,7 @@ from typing import Iterable, Literal
 import re
 
 _BREAK_RE = re.compile(r"^##\s+SEGMENT_BREAK\s+(\S+)\s*$")
-_LINE_RE = re.compile(r"^\[(NARRATOR|HOST_A|HOST_B)\]\s+(.*)$")
+_LINE_RE = re.compile(r"^\[(NARRATOR|HOST_A|HOST_B)\]\s*:?\s+(.*)$")
 _ROLE_MAP = {"NARRATOR": "narrator", "HOST_A": "host_a", "HOST_B": "host_b"}
 
 
