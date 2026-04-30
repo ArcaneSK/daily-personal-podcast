@@ -9,7 +9,7 @@ def test_synthesize_calls_sdk_and_wraps_clip():
     fake_client.text_to_speech.convert.return_value = iter([b"\x00\x01", b"\x02\x03"])
     with patch("app.tts.elevenlabs.ElevenLabs", return_value=fake_client):
         p = ElevenLabsProvider(api_key="fake", model="eleven_turbo_v2_5", voice_for={
-            "narrator": "vN", "host_a": "vA", "host_b": "vB"
+            "host_a": "vA", "host_b": "vB"
         })
         clip = p.synthesize("hi", voice_id="vN")
     assert isinstance(clip, VoiceClip)
@@ -24,8 +24,7 @@ def test_synthesize_calls_sdk_and_wraps_clip():
 
 
 def test_voice_for_role_uses_constructor_map():
-    p = ElevenLabsProvider(api_key="x", voice_for={"narrator": "vN", "host_a": "vA", "host_b": "vB"})
-    assert p.voice_for_role("narrator") == "vN"
+    p = ElevenLabsProvider(api_key="x", voice_for={"host_a": "vA", "host_b": "vB"})
     assert p.voice_for_role("host_b") == "vB"
 
 
@@ -33,4 +32,4 @@ def test_missing_api_key_raises(monkeypatch):
     monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
     import pytest
     with pytest.raises(RuntimeError, match="ELEVENLABS_API_KEY"):
-        ElevenLabsProvider(voice_for={"narrator": "vN", "host_a": "vA", "host_b": "vB"})
+        ElevenLabsProvider(voice_for={"host_a": "vA", "host_b": "vB"})

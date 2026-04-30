@@ -19,7 +19,7 @@ TRANSCRIPT = """## SEGMENT_BREAK 01-intro
 
 
 def _voice_map():
-    return {"narrator": "vN", "host_a": "vA", "host_b": "vB"}
+    return {"host_a": "vA", "host_b": "vB"}
 
 
 def test_synthesize_writes_mp3_and_manifest(tmp_project: Path):
@@ -46,7 +46,7 @@ def test_synthesize_writes_mp3_and_manifest(tmp_project: Path):
     assert manifest_path.exists()
     m = json.loads(manifest_path.read_text())
     assert m["chunks"]
-    # 3 speech chunks (NARRATOR lines merge) + 2 segment breaks = 5 entries
+    # 3 speech chunks (HOST_A lines merge) + 2 segment breaks = 5 entries
     assert sum(1 for c in m["chunks"] if c["kind"] == "speech") == 3
     assert sum(1 for c in m["chunks"] if c["kind"] == "break") == 2
 
@@ -69,7 +69,7 @@ def test_cache_hit_skips_provider_call(tmp_project: Path, monkeypatch):
         manifest_path=tmp_project / "episodes" / "2026-04-29" / "synthesis-manifest.json",
         cache_dir=cache_dir,
         provider=provider,
-        voice_for_role={"narrator": "vN", "host_a": "vA", "host_b": "vB"},
+        voice_for_role={"host_a": "vA", "host_b": "vB"},
         cache_enabled=True,
     )
 
@@ -86,7 +86,7 @@ def test_cache_hit_skips_provider_call(tmp_project: Path, monkeypatch):
         manifest_path=tmp_project / "episodes" / "2026-04-29" / "synthesis-manifest.json",
         cache_dir=cache_dir,
         provider=Boom(),
-        voice_for_role={"narrator": "vN", "host_a": "vA", "host_b": "vB"},
+        voice_for_role={"host_a": "vA", "host_b": "vB"},
         cache_enabled=True,
     )
 

@@ -10,7 +10,7 @@ def test_synthesize_calls_openai_and_returns_clip():
     fake_client = MagicMock()
     fake_client.audio.speech.create.return_value = response
     with patch("app.tts.openai.OpenAI", return_value=fake_client):
-        p = OpenAIProvider(api_key="x", voice_for={"narrator": "alloy", "host_a": "echo", "host_b": "onyx"})
+        p = OpenAIProvider(api_key="x", voice_for={"host_a": "echo", "host_b": "onyx"})
         clip = p.synthesize("hi", voice_id="alloy")
     assert isinstance(clip, VoiceClip)
     assert clip.audio_bytes == b"\xff\xfb\x90"
@@ -24,4 +24,4 @@ def test_synthesize_calls_openai_and_returns_clip():
 def test_missing_api_key_raises(monkeypatch):
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     with pytest.raises(RuntimeError, match="OPENAI_API_KEY"):
-        OpenAIProvider(voice_for={"narrator": "alloy", "host_a": "echo", "host_b": "onyx"})
+        OpenAIProvider(voice_for={"host_a": "echo", "host_b": "onyx"})
