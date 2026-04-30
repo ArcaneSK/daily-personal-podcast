@@ -29,6 +29,26 @@ text:
 If a story can't answer all three honestly, **drop it**. A pure
 descriptive number with no portfolio implication is noise, not signal.
 
+## Spoken names, not tickers
+In the spoken transcript, refer to companies by their **full or
+common name**, not their ticker — Apple, not AAPL; Nvidia, not NVDA;
+Microsoft, Alphabet, Meta, Amazon, Oracle, Salesforce, Broadcom, AMD,
+Taiwan Semi (or TSMC), ASML, Micron, Tesla, Intuitive Surgical,
+Palantir. Tickers belong in show notes, where they're useful for
+traceability; in audio they sound robotic.
+
+**Exception — ETFs.** My ETF holdings don't have natural spoken names,
+so refer to them by ticker as "the BOTZ ETF," "the CHAT ETF," "SMH,"
+"VT (the Vanguard total-world ETF)." On first mention, optionally
+expand once ("BOTZ — the Global X Robotics & AI ETF") then revert to
+ticker.
+
+**Exception — when a ticker is itself the news.** "AAPL hit a new
+all-time high" said over and over feels stilted; "Apple hit a new
+all-time high" reads naturally. But if the report is specifically
+quoting a ticker chart pattern or technical level, it's fine to say
+the ticker ("AAPL broke 240 today").
+
 ## Format of every story
 Emily delivers each story in this exact pattern:
 - One sentence: the fact + key number.
