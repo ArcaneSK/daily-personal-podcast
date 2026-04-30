@@ -15,20 +15,20 @@ show:
     persona: "Curious, asks the obvious follow-up."
   host_b:
     name: "Jordan"
-    persona: "Skeptical, pushes for what's actually new."
+    persona: "Excited, pushes for what's actually new."
 
 research:
   parallel: true
   max_segments_concurrent: 4
-  per_segment_timeout_seconds: 180
+  per_segment_timeout_seconds: 600
 
 tts:
   provider: elevenlabs
   cache: true
   voices:
-    narrator: "4CrZuIW9am7gYAxgo2Af"
-    host_a:   "qSeXEcewz7tA0Q0qk9fH"
-    host_b:   "auq43ws1oslv0tO4BDa7"
+    narrator: "ImnfuV8oxhB7ya99oJfc"
+    host_a:   "D9Thk1W7FRMgiOhy3zVI"
+    host_b:   "3TStB8f3X3To0Uj5R7RK"
   options:
     elevenlabs:
       model: eleven_turbo_v2_5
