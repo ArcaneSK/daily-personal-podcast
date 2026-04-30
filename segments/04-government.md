@@ -79,11 +79,11 @@ Cover anything that meets the bar of "a thing actually happened today."
 
 ## Format / tone
 - Length: ~3 minutes spoken
-- Style: narrator-led, factual, news-wire register. Sam/Jordan can
-  break in on a single big story (e.g., a major Supreme Court
-  ruling) but most days the narrator carries it.
-- Tone: dry, "just the facts." If the agent finds itself wanting to
-  characterize motives, stop and report what was done instead.
+- Style: two-host conversational, factual, news-wire register. Aaron
+  asks the obvious questions ("what's the actual mechanism here?");
+  Emily delivers the substance with cited primary sources.
+- Tone: dry, "just the facts." If either host finds themselves
+  characterizing motives, stop and report what was done instead.
 
 ## Recurring threads to watch
 - AI / chip export-control regime (semiannual rule cycle)

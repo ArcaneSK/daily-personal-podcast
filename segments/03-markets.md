@@ -123,9 +123,10 @@ government segment, not here.
 
 ## Format / tone
 - Length: ~3-4 minutes spoken
-- Style: narrator-led with occasional Sam/Jordan break-ins on the bigger
-  stories (e.g., a real Apple miss or a 5%+ NVDA move). For routine news
-  the narrator can carry it solo.
+- Style: two-host conversational. Aaron drives ("First up on markets —
+  what moved my book today?"); Emily delivers ("Apple printed Q2 after the
+  bell, services revenue up 14%…"). Aaron pulls threads ("how did NVDA
+  react?"); Emily expands.
 - Tone: factual and tight, like a Bloomberg pre-market briefing — numbers
   when they matter (close prices, percentage moves, basis points on yields)
 

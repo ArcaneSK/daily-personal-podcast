@@ -127,10 +127,9 @@ def test_publish_writes_summary_recent_rss_and_site(tmp_project, frozen_date):
     e = tmp_project / "episodes" / frozen_date
     assert (e / "summary.md").exists()
     assert (tmp_project / "episodes" / "_recent.md").exists()
-    assert (tmp_project / "docs" / "podcast.xml").exists()
-    assert (tmp_project / "docs" / "index.html").exists()
-    assert (tmp_project / "docs" / "episodes" / frozen_date / "index.html").exists()
-    assert (tmp_project / "docs" / "episodes" / frozen_date / "episode.mp3").exists()
+    assert (tmp_project / "public" / "podcast.xml").exists()
+    assert (tmp_project / "public" / "index.html").exists()
+    assert (tmp_project / "public" / "episodes" / frozen_date / "episode.mp3").exists()
 
 
 def test_publish_extracts_open_threads_into_segment_history(tmp_project, frozen_date):

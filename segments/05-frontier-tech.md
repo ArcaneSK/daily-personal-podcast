@@ -114,9 +114,10 @@ shipped, not what was announced or promised.
 
 ## Format / tone
 - Length: ~3-4 minutes spoken
-- Style: narrator-led with Sam/Jordan break-ins on big breakthroughs.
-  Jordan should push back when something sounds promotional ("did they
-  actually publish numbers, or is this a press release?").
+- Style: two-host conversational. Aaron asks the curious "wait, that
+  could actually work?" follow-ups. Emily delivers the substance and
+  pushes back when something sounds promotional ("did they actually
+  publish numbers, or is this a press release?").
 - Tone: skeptical-but-curious. Engineering-grade specificity when the
   source provides it (energy density in Wh/kg, plasma confinement in
   seconds, trial endpoints with effect sizes).

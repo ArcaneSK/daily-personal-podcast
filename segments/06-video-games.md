@@ -125,9 +125,9 @@ Surface their news even if the genre fit is borderline:
 
 ## Format / tone
 - Length: ~3 minutes spoken
-- Style: narrator-led with Sam/Jordan riffing on the bigger releases.
-  Sam is the curious one ("wait, what's the hook of this game?");
-  Jordan is the "is this actually any good?" voice.
+- Style: two-host conversational. Aaron asks the curious "wait, what's
+  the hook of this game?"; Emily delivers the substance and is the
+  "is this actually any good?" voice.
 - Tone: enthusiast-friendly but skeptical of marketing copy. When a
   trailer is the only available info, say so. When a review embargo
   has lifted, lean on review scores.

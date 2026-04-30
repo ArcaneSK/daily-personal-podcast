@@ -102,8 +102,8 @@ even smaller releases:
 ## Format / tone
 - Length: ~6-8 minutes spoken (this segment is the show; lean longer if
   there's a lot of real news, shorter if it's quiet)
-- Style: two-host conversational. Sam asks the curious "wait, what does
-  that mean?" follow-ups; Jordan is excited about what's genuinely new and
+- Style: two-host conversational. Aaron asks the curious "wait, what does
+  that mean?" follow-ups; Emily is excited about what's genuinely new and
   pushes back when something's overhyped.
 - Tone: technical-when-it-matters, no hype, but allow genuine excitement
   when a release is actually impressive — don't flatten everything.

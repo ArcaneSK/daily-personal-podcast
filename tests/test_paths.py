@@ -1,5 +1,5 @@
 from pathlib import Path
-from app.paths import episode_dir, research_path, segment_history_path, recent_digest_path, docs_episode_dir
+from app.paths import episode_dir, research_path, segment_history_path, recent_digest_path, public_episode_dir
 
 
 def test_episode_dir(tmp_project: Path):
@@ -20,5 +20,5 @@ def test_recent_digest_path(tmp_project: Path):
     assert recent_digest_path(tmp_project) == tmp_project / "episodes" / "_recent.md"
 
 
-def test_docs_episode_dir(tmp_project: Path):
-    assert docs_episode_dir(tmp_project, "2026-04-29") == tmp_project / "docs" / "episodes" / "2026-04-29"
+def test_public_episode_dir(tmp_project: Path):
+    assert public_episode_dir(tmp_project, "2026-04-29") == tmp_project / "public" / "episodes" / "2026-04-29"

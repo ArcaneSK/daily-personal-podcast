@@ -1,13 +1,40 @@
 {% extends "base.html" %}
 {% block title %}{{ podcast.title }}{% endblock %}
 {% block main %}
-<ul class="episodes">
+<div class="toolbar">
+  <input type="search" id="search" placeholder="Search episodes (title, date, show notes)…" autocomplete="off" spellcheck="false">
+  <span id="results-count" class="results-count"></span>
+</div>
+
+<ol class="episodes" id="episode-list" reversed>
   {% for ep in episodes %}
-  <li>
-    <h2><a href="episodes/{{ ep.date_iso }}/">{{ ep.title }}</a></h2>
-    <p class="meta">{{ ep.date_iso }} · {{ ep.duration_label }}</p>
-    <audio controls preload="none" src="{{ ep.mp3_relpath }}"></audio>
+  <li class="episode" data-date="{{ ep.date_iso }}" data-title="{{ ep.title|e }}">
+    <details {% if loop.first %}open{% endif %}>
+      <summary>
+        <span class="ep-date">{{ ep.date_iso | format_date }}</span>
+        <span class="ep-title">{{ ep.title }}</span>
+        <span class="ep-duration">{{ ep.duration_label }}</span>
+      </summary>
+      <div class="episode-body">
+        <audio controls preload="none" src="{{ ep.mp3_relpath }}"></audio>
+        <div class="show-notes">{{ ep.show_notes_html | safe }}</div>
+      </div>
+    </details>
   </li>
   {% endfor %}
-</ul>
+</ol>
+
+<nav class="pagination" id="pagination" hidden>
+  <button id="prev-page" type="button">← Previous</button>
+  <span id="page-indicator"></span>
+  <button id="next-page" type="button">Next →</button>
+</nav>
+
+{% if not episodes %}
+<p class="empty">No episodes published yet. Run <code>uv run python -m app generate</code> to create one.</p>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="static/app.js"></script>
 {% endblock %}

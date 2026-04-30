@@ -49,13 +49,26 @@ def tts_cache_dir(root: Path) -> Path:
     return root / "episodes" / ".cache" / "tts"
 
 
-def docs_episode_dir(root: Path, date: str) -> Path:
-    return root / "docs" / "episodes" / date
+def public_episode_dir(root: Path, date: str) -> Path:
+    return root / "public" / "episodes" / date
 
 
-def docs_episode_mp3(root: Path, date: str) -> Path:
-    return docs_episode_dir(root, date) / "episode.mp3"
+def public_episode_mp3(root: Path, date: str) -> Path:
+    return public_episode_dir(root, date) / "episode.mp3"
+
+
+def public_index_path(root: Path) -> Path:
+    return root / "public" / "index.html"
+
+
+def public_static_dir(root: Path) -> Path:
+    return root / "public" / "static"
 
 
 def rss_path(root: Path) -> Path:
-    return root / "docs" / "podcast.xml"
+    return root / "public" / "podcast.xml"
+
+
+# Back-compat aliases — old code/tests imported docs_* names
+docs_episode_dir = public_episode_dir
+docs_episode_mp3 = public_episode_mp3

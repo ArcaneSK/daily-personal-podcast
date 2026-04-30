@@ -26,8 +26,7 @@ def test_generate_runs_full_pipeline(tmp_project, frozen_date):
         rc = cli_main(["--root", str(tmp_project), "generate", "--date", frozen_date])
     assert rc == 0
     assert (tmp_project / "episodes" / frozen_date / "episode.mp3").exists()
-    assert (tmp_project / "docs" / "podcast.xml").exists()
-    assert (tmp_project / "docs" / "episodes" / frozen_date / "index.html").exists()
+    assert (tmp_project / "public" / "podcast.xml").exists()
 
 
 def test_generate_refuses_when_episode_already_exists(tmp_project, frozen_date):

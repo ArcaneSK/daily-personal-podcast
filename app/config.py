@@ -57,16 +57,47 @@ class PublishConfig:
 
 
 @dataclass(frozen=True)
+class SfxCue:
+    prompt: str
+    duration_seconds: float
+
+
+@dataclass(frozen=True)
+class SfxConfig:
+    enabled: bool
+    show_open: SfxCue | None
+    segment_break: SfxCue | None
+    show_close: SfxCue | None
+
+
+@dataclass(frozen=True)
 class Config:
     podcast: PodcastMeta
     show: ShowConfig
     research: ResearchConfig
     tts: TTSConfig
     publish: PublishConfig
+    sfx: SfxConfig
 
 
 def _persona(d: dict[str, Any]) -> Persona:
     return Persona(name=d["name"], persona=d["persona"])
+
+
+def _sfx_cue(d: dict[str, Any] | None) -> SfxCue | None:
+    if not d:
+        return None
+    return SfxCue(prompt=d["prompt"], duration_seconds=float(d["duration_seconds"]))
+
+
+def _sfx_config(d: dict[str, Any] | None) -> SfxConfig:
+    d = d or {}
+    return SfxConfig(
+        enabled=bool(d.get("enabled", False)),
+        show_open=_sfx_cue(d.get("show_open")),
+        segment_break=_sfx_cue(d.get("segment_break")),
+        show_close=_sfx_cue(d.get("show_close")),
+    )
 
 
 def load_config(path: Path) -> Config:
@@ -87,4 +118,5 @@ def load_config(path: Path) -> Config:
             options=dict(raw["tts"].get("options", {})),
         ),
         publish=PublishConfig(**raw["publish"]),
+        sfx=_sfx_config(raw.get("sfx")),
     )

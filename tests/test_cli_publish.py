@@ -38,4 +38,4 @@ def test_publish_command_uses_real_anthropic_via_stub(tmp_project, frozen_date):
         rc = cli_main(["--root", str(tmp_project), "publish", "--date", frozen_date])
     assert rc == 0
     assert (tmp_project / "episodes" / frozen_date / "show-notes.md").exists()
-    assert (tmp_project / "docs" / "index.html").exists()
+    assert (tmp_project / "public" / "index.html").exists()

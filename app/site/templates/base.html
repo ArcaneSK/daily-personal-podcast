@@ -4,15 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{% block title %}{{ podcast.title }}{% endblock %}</title>
-  <link rel="stylesheet" href="{% block css %}/static/style.css{% endblock %}">
-  <link rel="alternate" type="application/rss+xml" title="{{ podcast.title }}" href="{{ podcast.base_url }}podcast.xml">
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="alternate" type="application/rss+xml" title="{{ podcast.title }}" href="podcast.xml">
 </head>
 <body>
   <header>
-    <h1><a href="{{ podcast.base_url }}">{{ podcast.title }}</a></h1>
-    <p>{{ podcast.description }}</p>
+    <div class="header-row">
+      <div class="header-meta">
+        <h1>{{ podcast.title }}</h1>
+        <p class="tagline">{{ podcast.description }}</p>
+      </div>
+      <a class="rss-badge" href="podcast.xml" title="RSS feed">RSS</a>
+    </div>
   </header>
   <main>{% block main %}{% endblock %}</main>
-  <footer><small>{{ podcast.author }}</small></footer>
+  <footer>
+    <small>{{ podcast.author }} · <span id="episode-count"></span></small>
+  </footer>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

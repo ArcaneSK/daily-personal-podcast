@@ -84,10 +84,18 @@ def synthesize_episode(
     voice_for_role: dict[str, str],
     cache_enabled: bool = True,
     provider_options_for_cache: dict[str, Any] | None = None,
+    stingers: dict[str, Path] | None = None,
 ) -> None:
-    """Synthesize the transcript into an mp3 at out_mp3, writing a manifest at manifest_path."""
+    """Synthesize the transcript into an mp3 at out_mp3, writing a manifest at manifest_path.
+
+    ``stingers`` is an optional dict mapping cue id to mp3 file path, with
+    keys ``show_open``, ``segment_break``, ``show_close``. When supplied,
+    show_open is prepended before the first speech, segment_break replaces
+    each SEGMENT_BREAK silence, and show_close is appended at the end.
+    """
     items = parse_transcript(transcript_path.read_text(encoding="utf-8"))
     chunks = chunk_for_synthesis(items, max_chars=1000)
+    stingers = stingers or {}
 
     # Determine sample rate: trust provider declaration, else probe first speech clip.
     sample_rate: int | None = getattr(provider, "sample_rate", None)
@@ -133,10 +141,35 @@ def synthesize_episode(
     # Stitch
     rate = sample_rate or 24000
     final = AudioSegment.silent(duration=0, frame_rate=rate)
+
+    def _load_stinger(cue_id: str) -> AudioSegment | None:
+        path = stingers.get(cue_id)
+        if not path:
+            return None
+        try:
+            seg = AudioSegment.from_file(str(path))
+        except Exception:
+            return None
+        return seg.set_channels(1).set_sample_width(2).set_frame_rate(rate)
+
+    show_open = _load_stinger("show_open")
+    segment_break = _load_stinger("segment_break")
+    show_close = _load_stinger("show_close")
+
+    if show_open is not None:
+        final += show_open + AudioSegment.silent(duration=300, frame_rate=rate)
+
     last_role: str | None = None
+    seen_first_speech = False
     for c, seg, _key in decoded:
         if c.kind == "break":
-            final += seg
+            if seen_first_speech and segment_break is not None:
+                final += AudioSegment.silent(duration=200, frame_rate=rate)
+                final += segment_break
+                final += AudioSegment.silent(duration=200, frame_rate=rate)
+            else:
+                # No stinger configured (or first break before any speech): plain silence.
+                final += seg
             last_role = None
             continue
         if last_role is None:
@@ -147,6 +180,10 @@ def synthesize_episode(
             # Speaker switch: small crossfade
             final = final.append(seg, crossfade=80)
         last_role = c.role
+        seen_first_speech = True
+
+    if show_close is not None:
+        final += AudioSegment.silent(duration=300, frame_rate=rate) + show_close
 
     # Peak normalize (target -1 dB)
     if final.max_dBFS != float("-inf"):

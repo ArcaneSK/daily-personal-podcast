@@ -9,17 +9,46 @@ WYSTK_ID = "__wystk"
 
 
 _SYSTEM_PROMPT = """You are scripting a daily personal podcast for one listener.
-Output a transcript with explicit speaker tags. Speakers are exactly: [NARRATOR], [HOST_A], [HOST_B].
-Use ## SEGMENT_BREAK <segment-id> markers between segments (one before each segment, in rundown order).
-Include a SEGMENT_BREAK for every id in the rundown — and ONLY those ids. Do not invent additional segments.
-Stay within roughly the target durations per segment (1 spoken minute is about 150 words).
-Cite sources by name in spoken text where natural (e.g. "Anthropic announced...", "per The Information").
-Do not invent facts. Do not include URLs in spoken text — those go to show notes; spoken text uses
-publication names.
-If the rundown contains "__wystk" ("What you should know today"), produce a single narrator-only segment
-that opens with a brief framing line ("A few quick notes before we close...") and weaves each blurb listed
-in the BLURBS section into one or two sentences. The total spoken length of __wystk should be roughly
-45 to 90 seconds (about 110-225 words), regardless of the global target.
+
+The show is a two-host conversation between Aaron and Emily.
+- HOST_A is Aaron. He DRIVES the show: opens, transitions between segments, asks
+  the obvious questions, keeps the pace moving, closes the show. He talks first
+  and last; his lines are usually shorter.
+- HOST_B is Emily. She BRINGS the information: delivers the facts, names the
+  sources, adds the analysis and depth. Most of the substantive content is in
+  her lines. She can show genuine excitement when something matters.
+- They have a real back-and-forth — Aaron sets up, Emily delivers, Aaron reacts
+  or pulls a thread, Emily expands. Avoid monologues longer than ~3 sentences
+  from either host; keep it conversational.
+
+Output a transcript with explicit speaker tags. Speakers are exactly: [HOST_A]
+and [HOST_B]. Do NOT use [NARRATOR]. Every spoken line must be tagged.
+
+Use ## SEGMENT_BREAK <segment-id> markers between segments (one before each
+segment, in rundown order). Include a SEGMENT_BREAK for every id in the rundown
+— and ONLY those ids. Do not invent additional segments.
+
+Show structure (keep this shape strictly):
+1. The first segment in the rundown is the show open. Begin it with a "cold
+   open" — Emily teases the most interesting headline or thread of the day in
+   one or two sentences, Aaron reacts ("wait, what?" / "we'll get there in a
+   second"), then Aaron does the real intro: greets the listener, names the
+   show, names today's date, and previews the rundown. ~30-45 seconds.
+2. The body segments follow in rundown order. Aaron transitions in ("First up,
+   AI news…"), Emily delivers. Aaron is the connective tissue between segments.
+3. If the rundown contains "__wystk" ("What you should know today"), it's the
+   penultimate segment. Aaron asks "A few quick notes before we close?" or
+   similar; Emily then delivers all the blurbs from the BLURBS section in one
+   or two compact sentences each. Total spoken length ~45-90 seconds (about
+   110-225 words), regardless of the global target.
+4. The final segment (the outro) is Aaron closing the show — thank-you, brief
+   look-ahead, sign-off. Emily can have one short line. ~15-25 seconds total.
+
+Stay within roughly the target durations per segment (1 spoken minute ≈ 150
+words). Cite sources by name in spoken text where natural ("Anthropic
+announced…", "per The Information"). Do not invent facts. Do not include URLs
+in spoken text — those go to show notes; spoken text uses publication names.
+
 Output only the transcript. No prologue, no commentary outside the speaker tags."""
 
 
@@ -93,9 +122,8 @@ def build_prompt(inp: ScriptInputs) -> str:
         f"TODAY: {inp.date_iso}",
         "",
         f"Total target length: ~{inp.target_total_minutes} minutes",
-        f"Narrator: {inp.narrator_name} — {inp.narrator_persona}",
-        f"Host A: {inp.host_a_name} — {inp.host_a_persona}",
-        f"Host B: {inp.host_b_name} — {inp.host_b_persona}",
+        f"Host A (driver): {inp.host_a_name} — {inp.host_a_persona}",
+        f"Host B (info-bringer): {inp.host_b_name} — {inp.host_b_persona}",
         "",
         "GLOBAL RECENT DIGEST (cross-segment continuity):",
         inp.recent_digest or "(empty)",

@@ -65,6 +65,18 @@ def cmd_synthesize(args: argparse.Namespace) -> int:
     options = cfg.tts.options.get(cfg.tts.provider, {})
     options = {**options, "voice_for": dict(cfg.tts.voices)}
     provider = get_provider(cfg.tts.provider, options)
+    # Generate (or look up cached) SFX stingers.
+    stingers: dict[str, Path] = {}
+    if cfg.sfx.enabled:
+        from app.sfx import ensure_stingers
+        try:
+            stingers = ensure_stingers(
+                cfg.sfx,
+                cache_dir=root / "assets" / "sfx",
+            )
+        except Exception as e:
+            print(f"WARN: SFX generation skipped — {e}", flush=True)
+
     synthesize_episode(
         transcript_path=transcript_path(root, date),
         out_mp3=episode_mp3_path(root, date),
@@ -74,6 +86,7 @@ def cmd_synthesize(args: argparse.Namespace) -> int:
         voice_for_role=dict(cfg.tts.voices),
         cache_enabled=cfg.tts.cache,
         provider_options_for_cache={k: v for k, v in (cfg.tts.options.get(cfg.tts.provider) or {}).items()},
+        stingers=stingers,
     )
     print(f"Wrote {episode_mp3_path(root, date)}", flush=True)
     return 0

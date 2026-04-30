@@ -46,10 +46,9 @@ def test_full_pipeline_produces_complete_episode(tmp_project, frozen_date):
         assert (e / "research" / f"{sid}.md").exists()
         assert (tmp_project / "segments" / "_history" / f"{sid}.md").exists()
     assert (tmp_project / "episodes" / "_recent.md").exists()
-    assert (tmp_project / "docs" / "podcast.xml").exists()
-    assert (tmp_project / "docs" / "index.html").exists()
-    assert (tmp_project / "docs" / "episodes" / frozen_date / "index.html").exists()
-    assert (tmp_project / "docs" / "episodes" / frozen_date / "episode.mp3").exists()
+    assert (tmp_project / "public" / "podcast.xml").exists()
+    assert (tmp_project / "public" / "index.html").exists()
+    assert (tmp_project / "public" / "episodes" / frozen_date / "episode.mp3").exists()
 
     # mp3 has nonzero duration (the FakeProvider yielded sine waves)
     assert (e / "episode.mp3").stat().st_size > 1000
