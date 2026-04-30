@@ -152,6 +152,46 @@ government segment, not here.
 - Datacenter capex / hyperscaler buildouts (drives NVDA, AVGO)
 - Big enterprise software shifts that move CHAT names
 
+## Required closing block — "Outlook & what to watch" (always)
+Every markets segment ends with a brief forward-looking close. Aaron
+asks for it ("So where does that leave us going in?" or "What's the
+read?"), Emily delivers it. Keep it tight — 45-75 seconds total — but
+it's mandatory; do not skip it on quiet days.
+
+The close has three parts, in this order:
+
+**1. Overall market read (15-25 seconds).** One or two sentences:
+where is U.S. risk appetite right now and why? Reference the actual
+state of: rate-cut odds (fed funds futures), 10Y yield level, VIX,
+breadth (advance/decline), credit spreads. State a posture: "risk-on
+into next week's CPI", "hawkish hold weighing on duration",
+"capitulation tape", etc. Not a recap — a posture.
+
+**2. Tech / AI complex read (20-30 seconds).** Specifically my
+exposure: how is the AI / semis / megacap-tech complex positioned
+right now? Are hyperscaler capex commitments still rising, or are
+analysts starting to question ROI? Is NVDA's narrative intact? Is the
+AI-power story (datacenter demand → utilities) still extending? One
+or two sentences with a clear posture: "AI complex still in
+hyperscaler-capex regime; SMH and CHAT supported", or "first cracks
+in the capex-as-growth narrative; watch hyperscaler guides next week",
+or "rotation out of frontier-AI semis into industrials this week".
+
+**3. What to watch — calendar items (10-20 seconds).** Concrete
+upcoming events that will move my positions, with dates if known.
+Examples: "AAPL earnings Thursday after the bell — watch services
+margin and China revenue", "May 8 CPI print — anything above 3.2%
+re-prices the 10Y", "NVDA earnings two weeks out — biggest tape risk
+into mid-month", "Powell speaks Friday at Jackson Hole pre-brief".
+Pick the 2-4 most relevant items; do not list everything.
+
+The close should NEVER:
+- Be a content-free "we'll see what tomorrow brings" sign-off.
+- Predict prices ("AAPL will hit 250"). State posture and catalysts,
+  not point predictions.
+- Repeat stories already covered. The close synthesizes, doesn't
+  recap.
+
 ## Sources to prioritize
 - **Wall Street Journal, Financial Times, Bloomberg, Reuters** for hard news
 - **The Information** for tech-specific scoops
@@ -169,11 +209,12 @@ government segment, not here.
 - Fed-speak if it's just the consensus view re-stated
 
 ## Format / tone
-- Length: ~3-4 minutes spoken
+- Length: ~4-5 minutes spoken (~3-4 min stories + ~45-75s outlook close)
 - Style: two-host conversational. Aaron opens by asking the portfolio
   question ("First up on markets — what moved my book today?"); Emily
   delivers each story as fact → portfolio meaning → directional tag.
   Aaron pulls threads only if Emily missed a position implication.
+  Aaron always cues the outlook close with one short prompt at the end.
 - Tone: actionable read, like a portfolio manager debriefing a client.
   Numbers ARE included but always paired with their meaning. Never end
   a story on a number — always end on the so-what.
