@@ -3,12 +3,12 @@ podcast:
   description: "Curated daily briefing, generated for one listener."
   author: "Your Name"
   language: en-US
-  base_url: "https://example.github.io/daily-personal-podcast/"
+  base_url: "https://example.local/daily-personal-podcast/"
 
 show:
-  target_total_minutes: 25
+  target_total_minutes: 5
   narrator:
-    name: "Alex"
+    name: "Claire"
     persona: "Calm, concise daily briefer."
   host_a:
     name: "Sam"
@@ -26,9 +26,9 @@ tts:
   provider: elevenlabs
   cache: true
   voices:
-    narrator: "REPLACE_WITH_ELEVENLABS_VOICE_ID"
-    host_a:   "REPLACE_WITH_ELEVENLABS_VOICE_ID"
-    host_b:   "REPLACE_WITH_ELEVENLABS_VOICE_ID"
+    narrator: "4CrZuIW9am7gYAxgo2Af"
+    host_a:   "qSeXEcewz7tA0Q0qk9fH"
+    host_b:   "auq43ws1oslv0tO4BDa7"
   options:
     elevenlabs:
       model: eleven_turbo_v2_5
