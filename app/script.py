@@ -149,9 +149,10 @@ def _call_claude(prompt: str) -> str:
         options = ClaudeAgentOptions(allowed_tools=[], model=model)
         chunks: list[str] = []
         async for message in query(prompt=prompt, options=options):
-            text = getattr(message, "text", None) or getattr(message, "content", None)
-            if isinstance(text, str):
-                chunks.append(text)
+            # See research.py: ResultMessage.result is the final consolidated text.
+            result = getattr(message, "result", None)
+            if isinstance(result, str):
+                chunks.append(result)
         return "".join(chunks)
 
     return asyncio.run(_run())

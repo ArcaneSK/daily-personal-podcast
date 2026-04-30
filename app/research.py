@@ -76,9 +76,11 @@ def _call_agent_sdk(prompt: str, *, timeout_seconds: int) -> str:
         options = ClaudeAgentOptions(allowed_tools=["WebSearch", "WebFetch"])
         chunks: list[str] = []
         async for message in query(prompt=prompt, options=options):
-            text = getattr(message, "text", None) or getattr(message, "content", None)
-            if isinstance(text, str):
-                chunks.append(text)
+            # ResultMessage.result is the final consolidated text; AssistantMessage.content
+            # is a list of TextBlock objects (partial), which we ignore in favor of the result.
+            result = getattr(message, "result", None)
+            if isinstance(result, str):
+                chunks.append(result)
         return "".join(chunks)
 
     return asyncio.run(asyncio.wait_for(_run(), timeout=timeout_seconds))

@@ -200,9 +200,9 @@ def _make_summarizer():
             options = ClaudeAgentOptions(allowed_tools=[], model=model)
             chunks: list[str] = []
             async for message in query(prompt=prompt, options=options):
-                text = getattr(message, "text", None) or getattr(message, "content", None)
-                if isinstance(text, str):
-                    chunks.append(text)
+                result = getattr(message, "result", None)
+                if isinstance(result, str):
+                    chunks.append(result)
             return "".join(chunks)
 
         return asyncio.run(_run())
@@ -229,9 +229,9 @@ def _make_compressor():
             options = ClaudeAgentOptions(allowed_tools=[], model=model)
             chunks: list[str] = []
             async for message in query(prompt=prompt, options=options):
-                text2 = getattr(message, "text", None) or getattr(message, "content", None)
-                if isinstance(text2, str):
-                    chunks.append(text2)
+                result = getattr(message, "result", None)
+                if isinstance(result, str):
+                    chunks.append(result)
             return "".join(chunks)
 
         return asyncio.run(_run())
