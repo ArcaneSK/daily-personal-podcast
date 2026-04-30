@@ -1,0 +1,81 @@
+# Copy this file to `config.yaml` and customize for your show.
+# `config.yaml` is gitignored so your personal settings stay local.
+
+podcast:
+  title: "My Daily Podcast"
+  description: "A daily briefing tailored to me."
+  author: "Your Name"
+  language: en-US
+  # If you publish the static site (public/index.html), set this to its URL.
+  # If you only listen locally via file://, leave the example value or use any placeholder.
+  base_url: "https://example.local/my-daily-podcast/"
+
+show:
+  target_total_minutes: 22
+  # The show is a two-host conversation. host_a drives (opens, transitions,
+  # closes); host_b brings the information. Pick names that match the voices
+  # you'll use. The 'narrator' slot is retained for backward compatibility
+  # and should mirror host_a in case any legacy NARRATOR-tagged lines slip in.
+  narrator:
+    name: "Host A name"
+    persona: "(legacy slot — same as host_a)"
+  host_a:
+    name: "Host A name"
+    persona: "Drives the show — opens, leads transitions, asks the obvious follow-up questions, keeps the pace moving."
+  host_b:
+    name: "Host B name"
+    persona: "Brings the information — delivers the facts, names the sources, adds analysis and depth."
+
+research:
+  # Run all enabled segments concurrently (bounded by max_segments_concurrent).
+  parallel: true
+  max_segments_concurrent: 4
+  # Per-segment timeout for the Claude Agent SDK research call. The agent
+  # does web search + multiple fetches; 600s is comfortable for dense
+  # segment instructions. Lower if your segments are simple.
+  per_segment_timeout_seconds: 600
+
+tts:
+  # Built-in providers: elevenlabs (default), openai, edge, fake.
+  # You can also point at a custom provider via dotted path:
+  #   provider: my_pkg.MyProvider
+  provider: elevenlabs
+  cache: true
+  # Replace these with real ElevenLabs voice IDs from your account
+  # (https://elevenlabs.io/app/voice-library or your /v1/voices API).
+  voices:
+    narrator: "REPLACE_WITH_HOST_A_VOICE_ID"
+    host_a:   "REPLACE_WITH_HOST_A_VOICE_ID"
+    host_b:   "REPLACE_WITH_HOST_B_VOICE_ID"
+  options:
+    elevenlabs:
+      model: eleven_turbo_v2_5
+      stability: 0.5
+      similarity_boost: 0.75
+    # openai:
+    #   model: tts-1
+    # edge:
+    #   {}
+
+# Sound effects / mild music cues. Generated once via the ElevenLabs
+# sound-generation API and cached on disk. Set enabled: false to skip.
+sfx:
+  enabled: true
+  show_open:
+    prompt: "short cinematic news-show open sting, electronic, gentle, rising, 3 seconds, no vocals"
+    duration_seconds: 3.0
+  segment_break:
+    prompt: "subtle quick whoosh transition stinger, electronic, neutral mood, 1 second"
+    duration_seconds: 1.0
+  show_close:
+    prompt: "warm short outro chord tail, soft synth, 2 seconds, no vocals, fade out"
+    duration_seconds: 2.0
+
+publish:
+  output_dir: public
+  # How many days of cross-segment digest to keep loaded as context for the
+  # next day's research and scripting calls.
+  recent_window_days: 7
+  # Hard caps for token-bounded history files. Compression triggers when over.
+  segment_history_token_cap: 1500
+  recent_digest_word_cap: 500

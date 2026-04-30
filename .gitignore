@@ -18,3 +18,26 @@ episodes/.cache/
 # Local secrets — never commit
 .env
 .env.local
+
+# Personal config — copy config.example.yaml to config.yaml and customize.
+config.yaml
+
+# User-authored segments. Keep the template and shipped examples committed
+# (those start with '_'); ignore everything else under segments/ that isn't
+# the _history dir's gitkeep.
+segments/[0-9]*-*.md
+segments/_history/*.md
+
+# Generated episode artifacts.
+episodes/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
+episodes/_recent.md
+
+# Generated static site outputs (everything in public/ is regenerated on
+# every publish run).
+public/index.html
+public/podcast.xml
+public/episodes/
+public/static/
+
+# Cached SFX stingers (regenerated from config; specific to your prompts).
+assets/
