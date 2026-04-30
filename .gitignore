@@ -19,6 +19,9 @@ episodes/.cache/
 .env
 .env.local
 
+# Per-machine Claude Code settings (user-specific)
+.claude/settings.local.json
+
 # Personal config — copy config.example.yaml to config.yaml and customize.
 config.yaml
 
