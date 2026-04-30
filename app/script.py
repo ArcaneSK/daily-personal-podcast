@@ -72,26 +72,40 @@ def _is_outro_id(seg_id: str) -> bool:
     return seg_id.startswith("99-")
 
 
+def _is_intro_id(seg_id: str) -> bool:
+    return seg_id.startswith("01-")
+
+
 def build_filtered_rundown(segments: list[dict]) -> tuple[list[dict], list, bool]:
-    """Apply the §7 spec algorithm:
-    - Identify outro = last segment by original order whose id starts with '99-'.
-    - For body segments (non-outro): full -> rundown; blurb -> blurbs[]; empty -> drop.
-    - Outro: kept as closer if not 'empty', regardless of full/blurb classification.
+    """Apply the §7 spec algorithm with intro/outro slots ALWAYS preserved:
+    - Identify intro = first segment whose id starts with '01-' (positional).
+    - Identify outro = last segment whose id starts with '99-' (positional).
+    - Intro and outro are narrator-driven shells; they are kept in the rundown
+      regardless of research status (their prose typically opts out of research
+      and they will classify as 'empty', but structurally they must remain so
+      the cold open and outro show up where the spec promises).
+    - For body segments (non-intro, non-outro): full -> rundown; blurb -> blurbs[];
+      empty -> drop.
     - Insert '__wystk' before outro (or at end if no outro) when blurbs is non-empty.
     Raises if everything would be dropped.
     Returns (rundown_items, blurbs_list, has_outro).
     """
-    # Find positional outro (last 99- by original order)
+    intro_idx = -1
+    for i, s in enumerate(segments):
+        if _is_intro_id(s["id"]):
+            intro_idx = i
+            break
     outro_idx = -1
     for i, s in enumerate(segments):
         if _is_outro_id(s["id"]):
             outro_idx = i
+    intro_seg = segments[intro_idx] if intro_idx != -1 else None
     outro_seg = segments[outro_idx] if outro_idx != -1 else None
 
     body: list[dict] = []
     blurbs: list = []  # list[Story]
     for i, s in enumerate(segments):
-        if i == outro_idx:
+        if i == intro_idx or i == outro_idx:
             continue  # handled separately
         status = s["status"]
         if status == "full":
@@ -100,11 +114,13 @@ def build_filtered_rundown(segments: list[dict]) -> tuple[list[dict], list, bool
             blurbs.extend(s.get("stories", []))
         # empty: drop
 
-    rundown = list(body)
-
-    has_outro = outro_seg is not None and outro_seg["status"] != "empty"
+    rundown: list[dict] = []
+    if intro_seg is not None:
+        rundown.append(intro_seg)
+    rundown.extend(body)
     if blurbs:
         rundown.append({"id": WYSTK_ID, "status": "wystk", "blurbs": blurbs})
+    has_outro = outro_seg is not None
     if has_outro:
         rundown.append(outro_seg)
 

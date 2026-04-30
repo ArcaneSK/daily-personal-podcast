@@ -60,7 +60,9 @@ def test_filter_no_blurbs_no_wystk():
     assert blurbs == []
 
 
-def test_filter_empty_outro_is_dropped_wystk_becomes_closer():
+def test_filter_empty_outro_is_kept_as_closer():
+    """Empty outros are retained — the outro slot is structural and always
+    survives so the cold-open / outro layout holds even on quiet days."""
     segments = [
         _seg("01-intro", "full"),
         _seg("02-news", "full"),
@@ -68,8 +70,19 @@ def test_filter_empty_outro_is_dropped_wystk_becomes_closer():
         _seg("99-outro", "empty"),
     ]
     rundown, blurbs, has_outro = build_filtered_rundown(segments)
-    assert [r["id"] for r in rundown] == ["01-intro", "02-news", "__wystk"]
-    assert has_outro is False
+    assert [r["id"] for r in rundown] == ["01-intro", "02-news", "__wystk", "99-outro"]
+    assert has_outro is True
+
+
+def test_filter_keeps_empty_intro_in_rundown():
+    """Intro is always retained even when empty (narrator-only cold open)."""
+    segments = [
+        _seg("01-intro", "empty"),
+        _seg("02-news", "full"),
+        _seg("99-outro", "full"),
+    ]
+    rundown, _blurbs, _has_outro = build_filtered_rundown(segments)
+    assert [r["id"] for r in rundown] == ["01-intro", "02-news", "99-outro"]
 
 
 def test_filter_blurb_outro_stays_as_closer_not_in_wystk():
@@ -95,10 +108,11 @@ def test_filter_no_outro_segment_appends_wystk_at_end():
     assert has_outro is False
 
 
-def test_filter_all_empty_raises():
+def test_filter_all_empty_body_only_raises():
+    """All-empty rundown with NO intro/outro slots still raises."""
     segments = [
-        _seg("01-intro", "empty"),
         _seg("02-news", "empty"),
+        _seg("03-markets", "empty"),
     ]
     with pytest.raises(ValueError, match="every segment is empty"):
         build_filtered_rundown(segments)
