@@ -1,13 +1,60 @@
 # US Markets
 
 ## Why this segment exists
-Brief me on what's happening in the U.S. equity and rates markets that
-matters for my portfolio. **This segment is U.S.-market-only** — focus on
-NYSE/Nasdaq names, U.S. indices, U.S. Treasuries, the Fed, U.S. economic
-data. International stories belong here only if they have a clear,
-direct mechanism to move U.S. equities (e.g., TSMC capacity affecting
-NVDA/SMH, Iran tensions affecting U.S. oil names). Pure global stories
-without a U.S. transmission channel go in the international briefing.
+Brief me on what's happening in U.S. markets in terms of WHAT IT MEANS
+FOR MY PORTFOLIO. I do not want a numbers dump. I want actionable read.
+
+**This segment is U.S.-market-only** — focus on NYSE/Nasdaq names, U.S.
+indices, U.S. Treasuries, the Fed, U.S. economic data. International
+stories belong here only if they have a clear, direct mechanism to move
+U.S. equities (e.g., TSMC capacity affecting NVDA/SMH, Iran tensions
+affecting U.S. oil names). Pure global stories without a U.S.
+transmission channel go in the international briefing.
+
+## THE PRIME DIRECTIVE — "so what for my book?"
+This is the single most important rule for this segment. Every story
+must answer **all three** of these questions, in this order, in spoken
+text:
+
+1. **What happened** — fact + the one number that matters (e.g., "the
+   Fed held 3.50–3.75% in an 8–4 split; the 10Y jumped to 4.42%").
+2. **What it means** — interpret it for my holdings (e.g., "that's a
+   hawkish hold — bad for long-duration tech valuations, so SMH and
+   CHAT take it on the chin; AAPL less exposed").
+3. **Should I care** — bullish, bearish, or neutral for which specific
+   position, and at what magnitude. Use plain words: "bullish for
+   NVDA," "neutral for AAPL," "watch but don't act on this," "no
+   action — informational only."
+
+If a story can't answer all three honestly, **drop it**. A pure
+descriptive number with no portfolio implication is noise, not signal.
+
+## Format of every story
+Emily delivers each story in this exact pattern:
+- One sentence: the fact + key number.
+- One sentence: what it means for my book — name the specific tickers
+  and the direction.
+- One short tag line: "Bullish for NVDA. Neutral for AAPL. Watch — no
+  action yet." (Or whatever fits.)
+
+Aaron's job here is to ask the obvious portfolio question if Emily
+hasn't already answered it ("So what does that do to NVDA?" or "Does
+that change anything for AAPL into earnings?"). His questions should
+pull threads, not nod along.
+
+## What "actionable" means
+Examples of acceptable so-what tags:
+- "Bullish for AAPL into the print — China shipment data went positive."
+- "Neutral for SMH — guidance was in line, market wanted a beat."
+- "Bearish for the whole AI complex if 10Y sustains > 4.5% — duration risk."
+- "Watch — TSM capacity story matters for SMH if Taiwan tensions escalate."
+- "No action — quarterly noise, fundamentals unchanged."
+
+NOT acceptable:
+- "The S&P closed up 0.4%, the Nasdaq up 0.6%, the Dow flat." — pure
+  numbers, no read.
+- "Hyperscalers reported earnings." — no specifics, no implications.
+- "Analysts are watching the Fed closely." — empty.
 
 ## My portfolio (use this to prioritize)
 I hold these positions — anything that materially affects them is
@@ -123,12 +170,21 @@ government segment, not here.
 
 ## Format / tone
 - Length: ~3-4 minutes spoken
-- Style: two-host conversational. Aaron drives ("First up on markets —
-  what moved my book today?"); Emily delivers ("Apple printed Q2 after the
-  bell, services revenue up 14%…"). Aaron pulls threads ("how did NVDA
-  react?"); Emily expands.
-- Tone: factual and tight, like a Bloomberg pre-market briefing — numbers
-  when they matter (close prices, percentage moves, basis points on yields)
+- Style: two-host conversational. Aaron opens by asking the portfolio
+  question ("First up on markets — what moved my book today?"); Emily
+  delivers each story as fact → portfolio meaning → directional tag.
+  Aaron pulls threads only if Emily missed a position implication.
+- Tone: actionable read, like a portfolio manager debriefing a client.
+  Numbers ARE included but always paired with their meaning. Never end
+  a story on a number — always end on the so-what.
+
+## What to skip in this segment specifically
+- "The market closed mixed/up/down" recaps without per-position meaning.
+- Generic Fed-watcher commentary unrelated to my holdings.
+- Earnings of names not on my watchlist or in my ETFs (skip them
+  entirely; do not surface for completeness).
+- Pre-market or after-hours moves under 2% unless they relate to a
+  position with a known catalyst.
 
 ## Recurring threads to watch
 - TSMC / Taiwan geopolitical risk premium
