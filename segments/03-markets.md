@@ -1,10 +1,13 @@
-# Markets & National News
+# US Markets
 
 ## Why this segment exists
-Brief me on what's happening in the U.S. government and the economy that
-matters for my portfolio. I want signal that helps me understand what's
-moving my positions and the macro backdrop, not generic "stocks finished
-mixed" wrap-ups.
+Brief me on what's happening in the U.S. equity and rates markets that
+matters for my portfolio. **This segment is U.S.-market-only** — focus on
+NYSE/Nasdaq names, U.S. indices, U.S. Treasuries, the Fed, U.S. economic
+data. International stories belong here only if they have a clear,
+direct mechanism to move U.S. equities (e.g., TSMC capacity affecting
+NVDA/SMH, Iran tensions affecting U.S. oil names). Pure global stories
+without a U.S. transmission channel go in the international briefing.
 
 ## My portfolio (use this to prioritize)
 I hold these positions — anything that materially affects them is
@@ -24,6 +27,52 @@ So my exposure is: heavy on AI / semiconductors / megacap tech, plus
 robotics, plus broad world. If a story moves any of those names or those
 themes, surface it.
 
+## Watchlist — adjacent names worth tracking
+I'm not necessarily holding these, but they're directly tied to my themes
+and I want to know when they have meaningful news (earnings, guidance,
+analyst-day shifts, major contracts, regulatory action, big single-day
+moves). Rotate through these — don't try to mention all of them every day,
+just the ones with real news that day.
+
+**Megacap tech and AI software**
+- **NVDA** — the AI infra bellwether (already in BOTZ/CHAT/SMH)
+- **MSFT** — Azure / Copilot / OpenAI relationship
+- **GOOGL** — Gemini, Search disruption story, capex
+- **META** — Llama, AI capex, Reality Labs
+- **AMZN** — AWS / Anthropic stake / Bedrock
+- **ORCL** — sleeper AI cloud capex story (OCI growth)
+- **CRM** — Agentforce / enterprise AI
+
+**Semiconductors**
+- **TSM** — fab capacity, geopolitical risk
+- **AVGO** — custom AI ASICs, networking
+- **AMD** — MI300/MI400 ramp, datacenter share
+- **ASML / KLAC / LRCX / AMAT** — semicap equipment cycle
+- **MU** — HBM memory cycle (critical for NVDA platforms)
+- **ARM** — CPU IP, AI edge story
+- **ANET** — datacenter networking
+
+**Robotics / automation pure-plays**
+- **TSLA** — Optimus, FSD; treat as a robotics story
+- **ISRG** — surgical robotics
+- **ABB / FANUY** — industrial automation (in BOTZ)
+- **SYM** — warehouse robotics
+- **PATH** — RPA / agentic enterprise
+
+**AI-adjacent power & infrastructure** (datacenters need power)
+- **VST / CEG / NRG** — independent power producers seeing AI demand
+- **NEE / DUK** — regulated utilities, datacenter exposure
+- **ETN / GEV / VRT / PWR** — electrification / data-center buildout names
+
+**AI software pure-plays**
+- **PLTR** — government and enterprise AI deployment
+- **SNOW / DDOG / NET** — data + observability infra
+- **HOOD / COIN** — fintech with AI angle (less core; fold in only on real news)
+
+**Surface any of these when they have:** earnings (beat/miss + guide),
+single-day moves > 5%, major contract or design wins, analyst-day shifts,
+M&A activity, or regulatory action.
+
 ## What to cover
 Cover anything notable in any of these areas. Prioritize portfolio impact.
 
@@ -41,19 +90,14 @@ Cover anything notable in any of these areas. Prioritize portfolio impact.
 - Treasury yields (10Y in particular), dollar index moves
 - Recession signals, yield curve, credit spreads
 
-### Government and policy
-- Major federal legislation or executive orders affecting tech, AI, or semis
-- Antitrust action against megacap tech (DOJ, FTC, EU)
-- AI regulation (SB-style state bills, federal orders, EU AI Act
-  enforcement)
-- Trade policy: tariffs, export controls (especially U.S./China on chips,
-  TSMC fab restrictions), CHIPS Act developments
-- Debt ceiling, budget deal news that affects tech spending or treasuries
-
-### Geopolitics with portfolio impact
-- China / Taiwan tensions (TSM is critical infrastructure for SMH)
-- Russia / Ukraine if it moves energy or commodities meaningfully
-- Middle East if it moves oil meaningfully
+### Government and policy with direct market impact
+Only items that ALREADY moved or clearly will move U.S. equities or rates
+today. Pure political news without a market mechanism belongs in the
+government segment, not here.
+- Antitrust rulings (DOJ, FTC, EU) when a verdict actually drops
+- AI / chip export-control announcements with implementation dates
+- Tariff or trade-deal news that moves a sector
+- Debt-ceiling or budget news priced into treasuries
 
 ### Sector and theme
 - Robotics industry developments (BOTZ rationale)

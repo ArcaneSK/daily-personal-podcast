@@ -19,6 +19,30 @@ news, give the more impactful ones more time but don't drop the others.
   Agents SDK, LangGraph, AutoGen, CrewAI, smolagents)
 - Notable research papers when widely discussed
 
+### AI tooling and developer ecosystem (high priority)
+I want to know about the tools that turn models into actual products and
+workflows. Surface anything new or meaningfully improved in these areas,
+even smaller releases:
+- **AI-native IDEs and coding assistants:** Cursor, Windsurf, Continue,
+  Cline, Aider, Zed AI, Claude Code, OpenAI Codex CLI, Replit Agent,
+  GitHub Copilot, Tabnine
+- **Agent runtimes and orchestration:** Claude Agent SDK, OpenAI Agents
+  SDK, LangGraph, AutoGen, CrewAI, smolagents, BeeAI, dspy, mastra.ai
+- **MCP (Model Context Protocol) ecosystem:** new MCP servers, clients,
+  registry developments, security advisories
+- **Evaluation frameworks:** Inspect, lm-eval-harness, Promptfoo,
+  Braintrust, Patronus, weave
+- **Observability and prompt management:** Langfuse, Helicone, Arize
+  Phoenix, LangSmith, PromptLayer
+- **RAG / retrieval:** new vector DBs (Qdrant, Weaviate, LanceDB,
+  Chroma, pgvector improvements), retrieval research, reranker releases
+- **Inference / serving infra:** vLLM, SGLang, TensorRT-LLM, MLX, Ollama,
+  llama.cpp, LM Studio, Together / Replicate / Modal / Fireworks updates
+- **Datasets and training infra:** new openly-released training datasets,
+  fine-tuning frameworks (Axolotl, Unsloth, torchtune, trl)
+- **Browser/computer-use agents:** Anthropic's Computer Use, OpenAI's
+  Operator, Browser Use, Skyvern, etc.
+
 ### Open source / open weights (high priority)
 - New open-weight releases that approach or beat closed-frontier models
   (Llama, Qwen, DeepSeek, Mistral, Falcon, Nemotron, Yi, Cohere Aya, Phi,

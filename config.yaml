@@ -6,7 +6,7 @@ podcast:
   base_url: "https://example.local/daily-personal-podcast/"
 
 show:
-  target_total_minutes: 5
+  target_total_minutes: 22
   narrator:
     name: "Claire"
     persona: "Calm, concise daily briefer."
