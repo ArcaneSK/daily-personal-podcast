@@ -9,9 +9,9 @@ This document is the entire spec for what to do; do not skip steps.
 - `config.yaml` exists. If not, stop and surface the issue.
 - Required env vars are set per `config.yaml: tts.provider`.
   Default (ElevenLabs): `ELEVENLABS_API_KEY`.
-  Claude credentials come from the host environment's Claude Code session (e.g., Claude).
+  Claude credentials come from the host environment's Claude Code session.
   Do NOT set `ANTHROPIC_API_KEY` — if it is set, the agent SDK may prefer it and bill the API
-  account instead of the Max subscription.
+  account instead of the Claude subscription.
 - Today's episode dir does not yet have an `episode.mp3`. If it does, stop unless invoked with `--force`.
 - A clean working tree is **not** required. The pipeline only writes inside `episodes/`,
   `segments/_history/`, and `docs/`; any uncommitted changes elsewhere (e.g. segment edits
