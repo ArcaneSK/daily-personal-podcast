@@ -18,8 +18,39 @@ The show is a two-host conversation between Aaron and Emily.
   sources, adds the analysis and depth. Most of the substantive content is in
   her lines. She can show genuine excitement when something matters.
 - They have a real back-and-forth — Aaron sets up, Emily delivers, Aaron reacts
-  or pulls a thread, Emily expands. Avoid monologues longer than ~3 sentences
-  from either host; keep it conversational.
+  or pulls a thread, Emily expands. Keep turns short — usually 1-2 sentences,
+  rarely 3.
+
+WRITE TIGHT. THIS IS THE MOST IMPORTANT RULE.
+The listener wants signal, not chatter. Every line earns its place by carrying
+information or moving the show forward.
+
+Concrete rules:
+- LEAD WITH THE POINT. Not "so it turns out that what's really interesting here
+  is…" — instead, "Anthropic shipped MCP connectors for Adobe today." Start
+  with the verb and the fact.
+- NO PREAMBLE. Cut: "Well…", "So…", "I think the interesting thing is…",
+  "What's wild about this is…", "Let me tell you about…", "Here's the thing…",
+  "Speaking of which…", "Now…", "Alright, so…", "Yeah, exactly." If a line
+  starts with throat-clearing, delete the preamble and keep the substance.
+- NO RESTATEMENT. Don't have one host repeat what the other just said in
+  different words ("So basically what you're saying is…"). The other host's
+  reaction should add a thread, not summarize.
+- NO HEDGE PADDING. Cut "kind of", "sort of", "I mean", "you know", "right?",
+  "to be clear", "obviously" unless they're load-bearing.
+- ONE THOUGHT PER LINE. If a line has two ideas connected by "and also" or
+  "but more importantly", split them or pick one.
+- DENSE FACTS. When Emily delivers a story, name the company, the thing, and
+  the number that matters in the first sentence. Save context for the
+  second sentence only if the listener needs it.
+- AVOID META-COMMENTARY. Don't describe what the show is doing
+  ("In this segment we'll cover…" / "Moving on now to…"). Just do it.
+- CUT QUESTIONS THAT DON'T PULL A THREAD. Aaron's questions should be
+  ones a listener actually has — "what does that mean for NVIDIA?" — not
+  filler ones — "huh, interesting?".
+
+Word budget per line is ~15-25 words for Aaron, ~25-50 words for Emily, with
+the longer end reserved for substantive single-thought delivery.
 
 Output a transcript with explicit speaker tags. Speakers are exactly: [HOST_A]
 and [HOST_B]. Do NOT use [NARRATOR]. Every spoken line must be tagged.
@@ -30,24 +61,26 @@ segment, in rundown order). Include a SEGMENT_BREAK for every id in the rundown
 
 Show structure (keep this shape strictly):
 1. The first segment in the rundown is the show open. Begin it with a "cold
-   open" — Emily teases the most interesting headline or thread of the day in
-   one or two sentences, Aaron reacts ("wait, what?" / "we'll get there in a
-   second"), then Aaron does the real intro: greets the listener, names the
-   show, names today's date, and previews the rundown. ~30-45 seconds.
-2. The body segments follow in rundown order. Aaron transitions in ("First up,
-   AI news…"), Emily delivers. Aaron is the connective tissue between segments.
+   open" — Emily delivers the day's sharpest fact in one sentence ("Apple
+   missed by ten cents tonight."), Aaron reacts in 3-5 words ("wait, what?"),
+   then Aaron does a tight show open: greet, name the show, the date, and
+   the rundown in one breath. ~25-35 seconds total. No throat-clearing.
+2. The body segments follow in rundown order. Aaron transitions in tight —
+   "First up, AI news." — and immediately hands to Emily. No preamble before
+   the transition.
 3. If the rundown contains "__wystk" ("What you should know today"), it's the
-   penultimate segment. Aaron asks "A few quick notes before we close?" or
-   similar; Emily then delivers all the blurbs from the BLURBS section in one
-   or two compact sentences each. Total spoken length ~45-90 seconds (about
-   110-225 words), regardless of the global target.
-4. The final segment (the outro) is Aaron closing the show — thank-you, brief
-   look-ahead, sign-off. Emily can have one short line. ~15-25 seconds total.
+   penultimate segment. Aaron's setup is one short line ("Quick hits before
+   we close."); Emily then delivers each blurb from the BLURBS section as
+   one tight sentence. Aim for ~40-70 seconds total, not 90.
+4. The final segment (the outro) is Aaron closing the show — one line
+   thank-you, one line forward look (Emily can have it), one line sign-off.
+   ~10-15 seconds total.
 
 Stay within roughly the target durations per segment (1 spoken minute ≈ 150
-words). Cite sources by name in spoken text where natural ("Anthropic
-announced…", "per The Information"). Do not invent facts. Do not include URLs
-in spoken text — those go to show notes; spoken text uses publication names.
+words). If you find yourself padding to hit a target, the target was wrong —
+end short and crisp instead. Cite sources by name in spoken text where
+natural ("Anthropic announced…", "per The Information"). Do not invent
+facts. Do not include URLs in spoken text — those go to show notes.
 
 Output only the transcript. No prologue, no commentary outside the speaker tags."""
 
