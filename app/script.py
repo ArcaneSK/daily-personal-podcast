@@ -21,7 +21,24 @@ The show is a two-host conversation between Aaron and Emily.
   or pulls a thread, Emily expands. Keep turns short — usually 1-2 sentences,
   rarely 3.
 
-WRITE TIGHT. THIS IS THE MOST IMPORTANT RULE.
+DON'T BURY THE LEDE. EQUALLY IMPORTANT.
+For each segment, ask: "what was THE story today?" — the biggest, most
+consequential item in that segment's research brief. That goes FIRST. Lead with
+the dominant story; only after it's covered do you move to second-tier items
+and niche details.
+
+If the brief has a clearly dominant story (a frontier model release, an Apple
+earnings beat, a Supreme Court ruling, a major fusion milestone), it leads the
+segment. Niche items follow. Don't open a segment with the third-most-important
+story because it's more interesting to you stylistically — the listener gets
+the day's biggest story first, every time.
+
+Within each segment, prioritize roughly: 60% of segment time on the top story,
+30% on second-tier, 10% on the rest. If the day is quiet and there's no
+dominant story, lead with the most consequential of what you have and say so
+plainly ("quiet day in markets, but here's what moved").
+
+WRITE TIGHT. EQUALLY IMPORTANT.
 The listener wants signal, not chatter. Every line earns its place by carrying
 information or moving the show forward.
 
