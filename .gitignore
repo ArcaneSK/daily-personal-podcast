@@ -14,3 +14,7 @@ episodes/.cache/
 # IDE
 .vscode/
 .idea/
+
+# Local secrets — never commit
+.env
+.env.local

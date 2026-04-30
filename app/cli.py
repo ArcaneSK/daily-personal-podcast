@@ -5,6 +5,13 @@ from datetime import date as _date_cls
 from pathlib import Path
 from typing import Sequence
 
+from dotenv import load_dotenv
+
+# Load .env from the project root if present, so ELEVENLABS_API_KEY (and any
+# other local secrets) are picked up automatically. Does nothing if the file
+# is absent. We do this at import time so every CLI subcommand sees the vars.
+load_dotenv()
+
 from app import __version__
 from app.config import load_config
 from app.segments import discover_segments
