@@ -65,10 +65,10 @@ You'll need:
 - **ffmpeg** on `PATH` (audio stitching)
 - An **ElevenLabs API key** (for the default TTS; free tier works to start)
 - **Claude credentials.** The pipeline uses `claude-agent-sdk`, which
-  auto-detects your local Claude Code session — including a Claude Max
+  auto-detects your local Claude Code session — including a Claude
   subscription. **Do NOT set `ANTHROPIC_API_KEY`** unless you specifically
   want to bill the API account; if it's set, the SDK may prefer it over
-  your Max session.
+  your Claude session.
 
 Then:
 
@@ -248,7 +248,7 @@ For a daily ~20 minute episode with six segments:
 - **ElevenLabs:** ~5,000–8,000 characters per episode → ~$0.50–$1.00/day
   on the Creator tier (or fewer thousand characters / no cost on the
   free tier if you stay under the cap).
-- **Claude Agent SDK:** uses your existing Claude Max subscription if
+- **Claude Agent SDK:** uses your existing Claude subscription if
   you have one (no marginal cost). If you instead set
   `ANTHROPIC_API_KEY`, expect roughly $1–$3 per episode depending on
   segment count and research depth.

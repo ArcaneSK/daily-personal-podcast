@@ -9,7 +9,7 @@ This document is the entire spec for what to do; do not skip steps.
 - `config.yaml` exists. If not, stop and surface the issue.
 - Required env vars are set per `config.yaml: tts.provider`.
   Default (ElevenLabs): `ELEVENLABS_API_KEY`.
-  Claude credentials come from the host environment's Claude Code session (e.g., Claude Code Max).
+  Claude credentials come from the host environment's Claude Code session (e.g., Claude).
   Do NOT set `ANTHROPIC_API_KEY` — if it is set, the agent SDK may prefer it and bill the API
   account instead of the Max subscription.
 - Today's episode dir does not yet have an `episode.mp3`. If it does, stop unless invoked with `--force`.
