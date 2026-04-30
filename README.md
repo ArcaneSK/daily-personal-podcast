@@ -11,8 +11,10 @@ an RSS feed, and a static site under `docs/`.
 uv venv
 uv pip install -e ".[dev]"
 # Set credentials:
-#   ANTHROPIC_API_KEY (or your Claude Code Max session)
 #   ELEVENLABS_API_KEY  (default TTS)
+#   Claude credentials come from your Claude Code session (e.g., Claude Code Max).
+#   Do NOT set ANTHROPIC_API_KEY — if set, the agent SDK may prefer it and bill
+#   the API account instead of your Max subscription.
 # Edit config.yaml — set base_url and ElevenLabs voice IDs.
 ```
 

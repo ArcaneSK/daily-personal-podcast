@@ -20,7 +20,7 @@ def test_generate_runs_full_pipeline(tmp_project, frozen_date):
         "## SEGMENT_BREAK 02-news\n[NARRATOR] news\n"
     )
     with patch("app.research._call_agent_sdk", return_value=fake_brief), \
-         patch("app.script._call_anthropic", return_value=transcript_text), \
+         patch("app.script._call_claude", return_value=transcript_text), \
          patch("app.cli._make_summarizer", return_value=lambda t, b: "summary body"), \
          patch("app.cli._make_compressor", return_value=lambda t: "(c)"):
         rc = cli_main(["--root", str(tmp_project), "generate", "--date", frozen_date])
@@ -47,7 +47,7 @@ def test_generate_force_overrides(tmp_project, frozen_date):
     fake_brief = "## Top stories (prioritized)\n### 1. h\n- **Source:** https://x\n### 2. h2\n- **Source:** https://y\n"
     transcript_text = "## SEGMENT_BREAK 01-intro\n[NARRATOR] hi\n## SEGMENT_BREAK 02-news\n[NARRATOR] news\n"
     with patch("app.research._call_agent_sdk", return_value=fake_brief), \
-         patch("app.script._call_anthropic", return_value=transcript_text), \
+         patch("app.script._call_claude", return_value=transcript_text), \
          patch("app.cli._make_summarizer", return_value=lambda t, b: "summary body"), \
          patch("app.cli._make_compressor", return_value=lambda t: "(c)"):
         rc = cli_main(["--root", str(tmp_project), "generate", "--date", frozen_date, "--force"])

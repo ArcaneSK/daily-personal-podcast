@@ -25,7 +25,7 @@ def test_script_command_writes_transcript_for_full_rundown(tmp_project, frozen_d
         "## SEGMENT_BREAK 02-news\n[NARRATOR] news\n"
     )
     with patch("app.research._call_agent_sdk", return_value=full_brief), \
-         patch("app.script._call_anthropic", return_value=transcript_text):
+         patch("app.script._call_claude", return_value=transcript_text):
         cli_main(["--root", str(tmp_project), "research", "--date", frozen_date])
         rc = cli_main(["--root", str(tmp_project), "script", "--date", frozen_date])
     assert rc == 0
@@ -57,7 +57,7 @@ def test_script_command_includes_wystk_when_blurb_present(tmp_project, frozen_da
         "## SEGMENT_BREAK __wystk\n[NARRATOR] one quick note before we close.\n"
     )
     with patch("app.research._call_agent_sdk", side_effect=fake_sdk), \
-         patch("app.script._call_anthropic", return_value=transcript_text):
+         patch("app.script._call_claude", return_value=transcript_text):
         cli_main(["--root", str(tmp_project), "research", "--date", frozen_date])
         rc = cli_main(["--root", str(tmp_project), "script", "--date", frozen_date])
     assert rc == 0

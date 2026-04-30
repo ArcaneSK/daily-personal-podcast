@@ -172,11 +172,13 @@ def cmd_script(args: argparse.Namespace) -> int:
 
 
 def _make_summarizer():
-    """Returns a callable (transcript_md, briefs_blob) -> summary body string. Calls Anthropic."""
-    from anthropic import Anthropic
+    """Returns a callable (transcript_md, briefs_blob) -> summary body string. Uses claude-agent-sdk."""
+    import asyncio
     import os
-    client = Anthropic()
-    model = os.environ.get("PODCAST_SUMMARY_MODEL", "claude-haiku-4-5-20251001")
+    from claude_agent_sdk import query, ClaudeAgentOptions  # type: ignore
+
+    model = os.environ.get("PODCAST_SUMMARY_MODEL") or None
+
     def _call(transcript_md: str, briefs_blob: str) -> str:
         prompt = (
             "Summarize this podcast episode in <=250 words. Use this exact structure:\n\n"
@@ -186,31 +188,47 @@ def _make_summarizer():
             "## Tone notes\n- One-line guidance for tomorrow.\n\n"
             f"TRANSCRIPT:\n{transcript_md}\n\nRESEARCH BRIEFS:\n{briefs_blob}\n"
         )
-        resp = client.messages.create(
-            model=model, max_tokens=600,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        return "".join(getattr(b, "text", "") for b in resp.content)
+
+        async def _run() -> str:
+            options = ClaudeAgentOptions(allowed_tools=[], model=model)
+            chunks: list[str] = []
+            async for message in query(prompt=prompt, options=options):
+                text = getattr(message, "text", None) or getattr(message, "content", None)
+                if isinstance(text, str):
+                    chunks.append(text)
+            return "".join(chunks)
+
+        return asyncio.run(_run())
+
     return _call
 
 
 def _make_compressor():
-    """Returns a callable text -> compressed text. Calls Anthropic."""
-    from anthropic import Anthropic
+    """Returns a callable text -> compressed text. Uses claude-agent-sdk."""
+    import asyncio
     import os
-    client = Anthropic()
-    model = os.environ.get("PODCAST_COMPRESS_MODEL", "claude-haiku-4-5-20251001")
+    from claude_agent_sdk import query, ClaudeAgentOptions  # type: ignore
+
+    model = os.environ.get("PODCAST_COMPRESS_MODEL") or None
+
     def _call(text: str) -> str:
         prompt = (
             "Compress this history into a tight 'Background context' paragraph (<=120 words). "
             "Preserve named entities, open threads, and rough chronology. Drop repeated daily detail.\n\n"
             f"{text}\n"
         )
-        resp = client.messages.create(
-            model=model, max_tokens=400,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        return "".join(getattr(b, "text", "") for b in resp.content)
+
+        async def _run() -> str:
+            options = ClaudeAgentOptions(allowed_tools=[], model=model)
+            chunks: list[str] = []
+            async for message in query(prompt=prompt, options=options):
+                text2 = getattr(message, "text", None) or getattr(message, "content", None)
+                if isinstance(text2, str):
+                    chunks.append(text2)
+            return "".join(chunks)
+
+        return asyncio.run(_run())
+
     return _call
 
 

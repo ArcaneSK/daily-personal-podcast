@@ -8,7 +8,6 @@ version = "0.1.0"
 description = "Personal daily podcast generator"
 requires-python = ">=3.11"
 dependencies = [
-  "anthropic>=0.40.0",
   "claude-agent-sdk>=0.1.0",
   "pydub>=0.25.1",
   "elevenlabs>=1.0.0",

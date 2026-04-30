@@ -158,7 +158,7 @@ def test_compose_transcript_writes_filtered_transcript(tmp_project):
         "## SEGMENT_BREAK __wystk\n[NARRATOR] quick notes\n"
         "## SEGMENT_BREAK 99-outro\n[NARRATOR] bye\n"
     )
-    with patch("app.script._call_anthropic", return_value=transcript_text):
+    with patch("app.script._call_claude", return_value=transcript_text):
         result = compose_transcript(_inputs(tmp_project, segments))
     assert result.read_text() == transcript_text
 
@@ -166,7 +166,7 @@ def test_compose_transcript_writes_filtered_transcript(tmp_project):
 def test_compose_transcript_validates_speaker_tags(tmp_project):
     bad = "## SEGMENT_BREAK 01-intro\n[GUEST] hi\n"
     segments = [_seg("01-intro", "full")]
-    with patch("app.script._call_anthropic", return_value=bad):
+    with patch("app.script._call_claude", return_value=bad):
         with pytest.raises(ValueError, match="Unknown speaker"):
             compose_transcript(_inputs(tmp_project, segments))
 
@@ -174,7 +174,7 @@ def test_compose_transcript_validates_speaker_tags(tmp_project):
 def test_compose_transcript_requires_all_filtered_segment_breaks(tmp_project):
     segments = [_seg("01-intro", "full"), _seg("02-news", "full"), _seg("99-outro", "full")]
     missing = "## SEGMENT_BREAK 01-intro\n[NARRATOR] only one\n"
-    with patch("app.script._call_anthropic", return_value=missing):
+    with patch("app.script._call_claude", return_value=missing):
         with pytest.raises(ValueError, match="missing SEGMENT_BREAK"):
             compose_transcript(_inputs(tmp_project, segments))
 
@@ -187,6 +187,6 @@ def test_compose_transcript_rejects_unexpected_segment_break(tmp_project):
         "## SEGMENT_BREAK 02-news\n[NARRATOR] should not be here\n"
         "## SEGMENT_BREAK 99-outro\n[NARRATOR] bye\n"
     )
-    with patch("app.script._call_anthropic", return_value=transcript_with_empty):
+    with patch("app.script._call_claude", return_value=transcript_with_empty):
         with pytest.raises(ValueError, match="unexpected SEGMENT_BREAK"):
             compose_transcript(_inputs(tmp_project, segments))

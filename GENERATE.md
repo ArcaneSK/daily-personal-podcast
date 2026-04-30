@@ -8,7 +8,10 @@ This document is the entire spec for what to do; do not skip steps.
 - `uv run python -m app --version` succeeds. If not, run `uv pip install -e .` and retry.
 - `config.yaml` exists. If not, stop and surface the issue.
 - Required env vars are set per `config.yaml: tts.provider`.
-  Default (ElevenLabs): `ELEVENLABS_API_KEY`. Anthropic credentials come from the host environment.
+  Default (ElevenLabs): `ELEVENLABS_API_KEY`.
+  Claude credentials come from the host environment's Claude Code session (e.g., Claude Code Max).
+  Do NOT set `ANTHROPIC_API_KEY` — if it is set, the agent SDK may prefer it and bill the API
+  account instead of the Max subscription.
 - Today's episode dir does not yet have an `episode.mp3`. If it does, stop unless invoked with `--force`.
 - A clean working tree is **not** required. The pipeline only writes inside `episodes/`,
   `segments/_history/`, and `docs/`; any uncommitted changes elsewhere (e.g. segment edits
@@ -32,7 +35,7 @@ This document is the entire spec for what to do; do not skip steps.
    rather than producing an empty one. Do not push.
 
 ## Failure modes
-- Anthropic auth missing → stop, surface clearly.
+- Claude Code session missing or expired → stop, surface clearly. Do NOT set `ANTHROPIC_API_KEY` to work around this.
 - TTS provider auth missing → stop, surface clearly.
 - Web search returns nothing for a segment → expected occasionally; segment is classified `empty` and skipped (or rolled into `__wystk` if `blurb`).
 - mp3 ends up under 60 seconds → likely synthesis bug; do not publish, surface for review.

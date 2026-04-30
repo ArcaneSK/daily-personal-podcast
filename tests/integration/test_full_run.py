@@ -32,7 +32,7 @@ def test_full_pipeline_produces_complete_episode(tmp_project, frozen_date):
         "## SEGMENT_BREAK 99-outro\n[NARRATOR] Goodbye.\n"
     )
     with patch("app.research._call_agent_sdk", return_value=fake_brief), \
-         patch("app.script._call_anthropic", return_value=fake_transcript), \
+         patch("app.script._call_claude", return_value=fake_transcript), \
          patch("app.cli._make_summarizer", return_value=lambda t, b: "## Headlines\n- ok\n"), \
          patch("app.cli._make_compressor", return_value=lambda t: "(compressed)"):
         rc = cli_main(["--root", str(tmp_project), "generate", "--date", frozen_date])
@@ -89,7 +89,7 @@ def test_full_pipeline_with_mixed_status(tmp_project, frozen_date):
         "## SEGMENT_BREAK 99-outro\n[NARRATOR] Goodbye.\n"
     )
     with patch("app.research._call_agent_sdk", side_effect=fake_sdk), \
-         patch("app.script._call_anthropic", return_value=fake_transcript), \
+         patch("app.script._call_claude", return_value=fake_transcript), \
          patch("app.cli._make_summarizer", return_value=lambda t, b: "## Headlines\n- ok\n"), \
          patch("app.cli._make_compressor", return_value=lambda t: "(compressed)"):
         rc = cli_main(["--root", str(tmp_project), "generate", "--date", frozen_date])

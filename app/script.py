@@ -137,23 +137,24 @@ def build_prompt(inp: ScriptInputs) -> str:
     return "\n".join(parts)
 
 
-def _call_anthropic(prompt: str) -> str:
-    """Single call to Claude via the Anthropic SDK. Returns the model's text output."""
-    from anthropic import Anthropic  # type: ignore
+def _call_claude(prompt: str) -> str:
+    """Single call to Claude via claude-agent-sdk. Returns the model's text output."""
+    import asyncio
     import os
-    client = Anthropic()
-    model = os.environ.get("PODCAST_SCRIPT_MODEL", "claude-opus-4-7")
-    resp = client.messages.create(
-        model=model,
-        max_tokens=8000,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    out = []
-    for block in resp.content:
-        text = getattr(block, "text", None)
-        if text:
-            out.append(text)
-    return "".join(out)
+    from claude_agent_sdk import query, ClaudeAgentOptions  # type: ignore
+
+    model = os.environ.get("PODCAST_SCRIPT_MODEL") or None
+
+    async def _run() -> str:
+        options = ClaudeAgentOptions(allowed_tools=[], model=model)
+        chunks: list[str] = []
+        async for message in query(prompt=prompt, options=options):
+            text = getattr(message, "text", None) or getattr(message, "content", None)
+            if isinstance(text, str):
+                chunks.append(text)
+        return "".join(chunks)
+
+    return asyncio.run(_run())
 
 
 def compose_transcript(inp: ScriptInputs) -> Path:
@@ -161,7 +162,7 @@ def compose_transcript(inp: ScriptInputs) -> Path:
     expected_ids = [s["id"] for s in rundown]
 
     prompt = build_prompt(inp)
-    text = _call_anthropic(prompt)
+    text = _call_claude(prompt)
 
     items = parse_transcript(text)  # raises on unknown speaker tags
 
